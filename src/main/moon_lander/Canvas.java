@@ -1,17 +1,19 @@
 package main.moon_lander;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Toolkit;
+import main.moon_lander.Controller.CanvasViewController;
+import main.moon_lander.MobileController.Observer.mobileControllerObserver;
+
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import javax.swing.JPanel;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 /**
  * Create a JPanel on which we will draw and listen for keyboard and mouse events.
@@ -19,21 +21,23 @@ import javax.swing.JPanel;
  * @author www.gametutorial.net
  */
 
-public abstract class Canvas extends JPanel implements KeyListener, MouseListener {
+public abstract class Canvas extends JPanel implements KeyListener, mobileControllerObserver {
     
     // Keyboard states - Here are stored states for keyboard keys - is it down or not.
     private static boolean[] keyboardState = new boolean[525];
     
     // Mouse states - Here are stored states for mouse keys - is it down or not.
     private static boolean[] mouseState = new boolean[3];
-        
-    
-    public Canvas()
-    {
+
+    public JButton btn_myPage;
+    public Window gameWindow;
+
+    public Canvas(Window gameWindow) {
         // We use double buffer to draw on the screen.
         this.setDoubleBuffered(true);
         this.setFocusable(true);
         this.setBackground(Color.black);
+        this.gameWindow = gameWindow;
         
         // If you will draw your own mouse cursor or if you just want that mouse cursor disapear, 
         // insert "true" into if condition and mouse cursor will be removed.
@@ -46,10 +50,37 @@ public abstract class Canvas extends JPanel implements KeyListener, MouseListene
         
         // Adds the keyboard listener to JPanel to receive key events from this component.
         this.addKeyListener(this);
-        // Adds the mouse listener to JPanel to receive mouse events from this component.
-        this.addMouseListener(this);
+
+        URL iconURL = this.getClass().getClassLoader().getResource("ic_myPage.png");
+        ImageIcon ic_myPage = new ImageIcon(iconURL);
+
+        System.out.println(iconURL);
+
+        Image iconImg = ic_myPage.getImage(); // transform it
+        Image scaledIcon = iconImg.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
+        ic_myPage = new ImageIcon(scaledIcon);
+
+        btn_myPage = new JButton(ic_myPage);
+        btn_myPage.setBorderPainted(false);
+        btn_myPage.setContentAreaFilled(false);
+        btn_myPage.setBounds(10, 10, 10, 10);
+        btn_myPage.setSize(new Dimension(50, 50));
+
+        new CanvasViewController(this);
     }
-    
+
+    public void placeMyPage(boolean show){
+        if(show){
+            btn_myPage.setVisible(true);
+
+            this.add(btn_myPage);
+        }
+
+        else{
+            btn_myPage.setVisible(false);
+            this.remove(btn_myPage);
+        }
+    }
     
     // This method is overridden in Framework.java and is used for drawing to the screen.
     public abstract void Draw(Graphics2D g2d);
@@ -93,53 +124,5 @@ public abstract class Canvas extends JPanel implements KeyListener, MouseListene
     public void keyTyped(KeyEvent e) { }
     
     public abstract void keyReleasedFramework(KeyEvent e);
-    
-    
-    // Mouse
-    /**
-     * Is mouse button "button" down?
-     * Parameter "button" can be "MouseEvent.BUTTON1" - Indicates mouse button #1
-     * or "MouseEvent.BUTTON2" - Indicates mouse button #2 ...
-     * 
-     * @param button Number of mouse button for which you want to check the state.
-     * @return true if the button is down, false if the button is not down.
-     */
-    public static boolean mouseButtonState(int button)
-    {
-        return mouseState[button - 1];
-    }
-    
-    // Sets mouse key status.
-    private void mouseKeyStatus(MouseEvent e, boolean status)
-    {
-        if(e.getButton() == MouseEvent.BUTTON1)
-            mouseState[0] = status;
-        else if(e.getButton() == MouseEvent.BUTTON2)
-            mouseState[1] = status;
-        else if(e.getButton() == MouseEvent.BUTTON3)
-            mouseState[2] = status;
-    }
-    
-    // Methods of the mouse listener.
-    @Override
-    public void mousePressed(MouseEvent e)
-    {
-        mouseKeyStatus(e, true);
-    }
-    
-    @Override
-    public void mouseReleased(MouseEvent e)
-    {
-        mouseKeyStatus(e, false);
-    }
-    
-    @Override
-    public void mouseClicked(MouseEvent e) { }
-    
-    @Override
-    public void mouseEntered(MouseEvent e) { }
-    
-    @Override
-    public void mouseExited(MouseEvent e) { }
     
 }

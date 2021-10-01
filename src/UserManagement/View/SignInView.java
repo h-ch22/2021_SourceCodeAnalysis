@@ -10,6 +10,7 @@ public class SignInView extends JFrame {
     public JTextField field_email;
     public JPasswordField field_password;
     public JPanel signInPanel;
+    public JCheckBox checkBox_autoSignIn;
 
     public SignInView() {
         setTitle("로그인");
@@ -52,6 +53,13 @@ public class SignInView extends JFrame {
         panel_password.add(new JLabel("비밀번호"));
         panel_password.add(field_password);
 
+        JPanel panel_autoSignIn = new JPanel();
+        panel_autoSignIn.setLayout(new FlowLayout());
+
+        checkBox_autoSignIn = new JCheckBox("자동 로그인");
+
+        panel_autoSignIn.add(checkBox_autoSignIn);
+
         JPanel panel_userInteraction = new JPanel();
         panel_userInteraction.setLayout(new FlowLayout());
 
@@ -64,6 +72,7 @@ public class SignInView extends JFrame {
 
         signInPanel.add(panel_email);
         signInPanel.add(panel_password);
+        signInPanel.add(panel_autoSignIn);
         signInPanel.add(panel_userInteraction);
     }
 }

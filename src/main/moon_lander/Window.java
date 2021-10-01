@@ -39,7 +39,7 @@ public class Window extends JFrame{
         // Exit the application when user close frame.
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        this.setContentPane(new Framework());
+        this.setContentPane(new Framework(this));
         
         this.setVisible(true);
     }

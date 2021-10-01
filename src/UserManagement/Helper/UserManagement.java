@@ -1,9 +1,7 @@
 package UserManagement.Helper;
 
-import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -14,23 +12,26 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.Helper.AES256Util;
 
+import java.awt.*;
 import java.io.*;
-import java.net.HttpRetryException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.prefs.Preferences;
 
-public class UserManagement {
+public class UserManagement extends AES256Util {
     private static final String BASE_URL = "https://identitytoolkit.googleapis.com/v1/";
     private static final String OPERATION_AUTH = "accounts:signInWithPassword";
-    private final String firebaseKey;
-    private final Firestore db;
-    private final AES256Util aes = new AES256Util();
 
+    private final String firebaseKey;
     private static UserManagement instance = null;
     private static FirebaseOptions options;
+
+    protected static UserRecord userRecord = null;
+    protected final Firestore db;
+    protected Preferences signInPrefs = Preferences.userNodeForPackage(UserManagement.class);
 
     public UserManagement() {
         firebaseKey = "AIzaSyBE6icm5bCka2H9g3eUUIA-NRz19hmL5-U";
@@ -38,7 +39,7 @@ public class UserManagement {
         if (options == null){
             try{
                 FileInputStream serviceAccount =
-                        new FileInputStream("resources/include/moonlader-serviceAccount.json");
+                        new FileInputStream("src/resources/include/moonlader-serviceAccount.json");
 
                 options = FirebaseOptions.builder()
                         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -55,7 +56,7 @@ public class UserManagement {
         db = FirestoreClient.getFirestore();
     }
 
-    public static UserManagement getInstance() throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
+    protected static UserManagement getInstance() throws NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
         if(instance == null){
             instance = new UserManagement();
         }
@@ -63,7 +64,7 @@ public class UserManagement {
         return instance;
     }
 
-    public int signIn(String email, String password) throws Exception{
+    protected int signIn(String email, String password) throws Exception{
         HttpURLConnection urlRequest = null;
 
         try{
@@ -78,7 +79,7 @@ public class UserManagement {
             OutputStream stream = urlRequest.getOutputStream();
             stream.write(out);
 
-            System.out.println(urlRequest.getResponseCode() + " " + urlRequest.getResponseMessage());
+            userRecord = FirebaseAuth.getInstance().getUserByEmail(email);
 
             urlRequest.disconnect();
 
@@ -87,13 +88,14 @@ public class UserManagement {
 
             return 0;
         } finally{
+            assert urlRequest != null;
             urlRequest.disconnect();
         }
 
         return urlRequest.getResponseCode();
     }
 
-    public boolean signUp(String email, String password, String nickName){
+    protected boolean signUp(String email, String password, String nickName){
         boolean signUpResult = false;
         UserRecord.CreateRequest request = new UserRecord.CreateRequest();
 
@@ -105,8 +107,8 @@ public class UserManagement {
 
             if(record.getUid() != null && !record.getUid().equals("")){
                 Map<String, Object> userData = new HashMap<>();
-                userData.put("mail", aes.encrypt(email));
-                userData.put("nickName", aes.encrypt(nickName));
+                userData.put("mail", encrypt(email));
+                userData.put("nickName", encrypt(nickName));
 
                 try{
                     db.collection("Users").document(record.getUid()).set(userData);
@@ -122,11 +124,34 @@ public class UserManagement {
             ex.printStackTrace();
         }
 
-
         return signUpResult;
     }
 
-    public String getAccountInfo(String token) throws Exception{
+    protected void registerAutoSignIn(String email, String password){
+        signInPrefs.put("email", email);
+        signInPrefs.put("password", password);
+    }
+
+    public boolean signOut(){
+        boolean result = false;
+
+        userRecord = null;
+        instance = null;
+        signInPrefs.remove("email");
+        signInPrefs.remove("password");
+
+        if(userRecord == null && instance == null && signInPrefs.get("email", "").equals("") && signInPrefs.get("password", "").equals("")){
+            result = true;
+        }
+
+        else{
+            result = false;
+        }
+
+        return result;
+    }
+
+    protected String getAccountInfo(String token) throws Exception{
         HttpURLConnection urlRequest = null;
         String email = null;
 
@@ -150,6 +175,7 @@ public class UserManagement {
         }  catch(Exception e){
             return null;
         }  finally{
+            assert urlRequest != null;
             urlRequest.disconnect();
         }
 

@@ -8,10 +8,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SignUpViewController implements ActionListener {
+public class SignUpViewController extends UserManagement implements ActionListener {
     private SignUpView view;
     private String email, password, check_password, nickName;
-    private UserManagement userManagement = new UserManagement();
 
     public SignUpViewController(SignUpView view){
         this.view = view;
@@ -51,7 +50,7 @@ public class SignUpViewController implements ActionListener {
                             view.btn_signUp.setEnabled(false);
                             view.signUpPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
-                            boolean signUpResult = userManagement.signUp(email, password, nickName);
+                            boolean signUpResult = signUp(email, password, nickName);
 
                             if(signUpResult){
                                 view.signUpPanel.setCursor(Cursor.getDefaultCursor());

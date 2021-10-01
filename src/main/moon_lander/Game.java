@@ -1,5 +1,8 @@
 package main.moon_lander;
 
+import Score.Helper.ScoreManagement;
+import main.moon_lander.MobileController.MobileControlHelper;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -9,6 +12,7 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 /**
  * Actual game.
@@ -16,7 +20,7 @@ import javax.imageio.ImageIO;
  * @author www.gametutorial.net
  */
 
-public class Game {
+public class Game extends ScoreManagement {
 
     /**
      * The space rocket with which player will have to land.
@@ -37,10 +41,14 @@ public class Game {
      * Red border of the frame. It is used when player crash the rocket.
      */
     private BufferedImage redBorderImg;
+
+    private MobileControlHelper controlHelper = new MobileControlHelper();
     
 
     public Game()
     {
+        super();
+
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
         
         Thread threadForInitGame = new Thread() {
@@ -114,14 +122,19 @@ public class Game {
             if((playerRocket.x > landingArea.x) && (playerRocket.x < landingArea.x + landingArea.landingAreaImgWidth - playerRocket.rocketImgWidth))
             {
                 // Here we check if the rocket speed isn't too high.
-                if(playerRocket.speedY <= playerRocket.topLandingSpeed)
+                if(playerRocket.speedY <= playerRocket.topLandingSpeed){
                     playerRocket.landed = true;
+
+                    updateScore(gameTime / Framework.secInNanosec);
+                }
+
                 else
                     playerRocket.crashed = true;
             }
             else
                 playerRocket.crashed = true;
-                
+
+
             Framework.gameState = Framework.GameState.GAMEOVER;
         }
     }
@@ -153,17 +166,17 @@ public class Game {
     {
         Draw(g2d, mousePosition);
         
-        g2d.drawString("Press space or enter to restart.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 70);
+        g2d.drawString("스페이스바 또는 엔터키를 누르면 다시 시작합니다.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 70);
         
         if(playerRocket.landed)
         {
-            g2d.drawString("You have successfully landed!", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3);
-            g2d.drawString("You have landed in " + gameTime / Framework.secInNanosec + " seconds.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
+            g2d.drawString("잘했어요!", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3);
+            g2d.drawString(gameTime / Framework.secInNanosec + "초만에 성공했습니다.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
         }
         else
         {
             g2d.setColor(Color.red);
-            g2d.drawString("You have crashed the rocket!", Framework.frameWidth / 2 - 95, Framework.frameHeight / 3);
+            g2d.drawString("게임 오버!", Framework.frameWidth / 2 - 95, Framework.frameHeight / 3);
             g2d.drawImage(redBorderImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
         }
     }

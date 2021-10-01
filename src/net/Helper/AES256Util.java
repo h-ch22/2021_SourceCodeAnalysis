@@ -7,13 +7,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class AES256Util {
-    public static String alg = "AES/CBC/PKCS5Padding";
+    private static final String alg = "AES/CBC/PKCS5Padding";
     private final String SECRET_KEY = "01234567890123450123456789012345";
-    private final String IV = "0123456789012345";
+    private final String IV = SECRET_KEY.substring(0, 16);
 
-    public String encrypt(String text) throws Exception{
+    protected String encrypt(String text) throws Exception{
         Cipher cipher = Cipher.getInstance(alg);
-        SecretKeySpec keySpec = new SecretKeySpec(IV.getBytes(), "AES");
+        SecretKeySpec keySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "AES");
         IvParameterSpec ivSpec = new IvParameterSpec(IV.getBytes());
         cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
 
@@ -22,9 +22,9 @@ public class AES256Util {
         return Base64.getEncoder().encodeToString(encrypted);
     }
 
-    public String decrypt(String encryptedText) throws Exception{
+    protected String decrypt(String encryptedText) throws Exception{
         Cipher cipher = Cipher.getInstance(alg);
-        SecretKeySpec keySpec = new SecretKeySpec(IV.getBytes(), "AES");
+        SecretKeySpec keySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "AES");
         IvParameterSpec ivSpec = new IvParameterSpec(IV.getBytes());
         cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
 

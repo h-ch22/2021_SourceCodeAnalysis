@@ -1,10 +1,13 @@
 package main.moon_lander;
 
+import Score.Helper.ScoreManagement;
+import main.moon_lander.MobileController.MobileControlHelper;
+import main.moon_lander.Window;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -50,7 +53,7 @@ public class Framework extends Canvas {
      * Pause between updates. It is in nanoseconds.
      */
     private final long GAME_UPDATE_PERIOD = secInNanosec / GAME_FPS;
-    
+
     /**
      * Possible states of the game
      */
@@ -69,18 +72,17 @@ public class Framework extends Canvas {
     
     // The actual game
     private Game game;
-    
-    
+    private ScoreManagement scoreHelper = new ScoreManagement();
+    private MobileControlHelper controlHelper = new MobileControlHelper();
     /**
      * Image for menu.
      */
     private BufferedImage moonLanderMenuImg;
     
     
-    public Framework ()
-    {
-        super();
-        
+    public Framework (Window gameWindow) {
+        super(gameWindow);
+
         gameState = GameState.VISUALIZING;
         
         //We start game in new thread.
@@ -142,10 +144,12 @@ public class Framework extends Canvas {
                     game.UpdateGame(gameTime, mousePosition());
                     
                     lastTime = System.nanoTime();
+
                 break;
                 case GAMEOVER:
-                    //...
-                break;
+                    controlHelper.init(this, gameState);
+
+                    break;
                 case MAIN_MENU:
                     //...
                 break;
@@ -160,6 +164,8 @@ public class Framework extends Canvas {
                     Initialize();
                     // Load files - images, sounds, ...
                     LoadContent();
+
+                    controlHelper.init(this, gameState);
 
                     // When all things that are called above finished, we change game status to main menu.
                     gameState = GameState.MAIN_MENU;
@@ -177,6 +183,7 @@ public class Framework extends Canvas {
                         // When we get size of frame we change status.
                         gameState = GameState.STARTING;
                     }
+
                     else
                     {
                         visualizingTime += System.nanoTime() - lastVisualizingTime;
@@ -211,23 +218,32 @@ public class Framework extends Canvas {
         {
             case PLAYING:
                 game.Draw(g2d, mousePosition());
-            break;
+                placeMyPage(false);
+                break;
+
             case GAMEOVER:
                 game.DrawGameOver(g2d, mousePosition(), gameTime);
-            break;
+                scoreHelper.getRank();
+                scoreHelper.drawRank(g2d);
+                placeMyPage(true);
+
+                break;
             case MAIN_MENU:
                 g2d.drawImage(moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
                 g2d.setColor(Color.white);
-                g2d.drawString("Use w a d keys to controle the rocket.", frameWidth / 2 - 117, frameHeight / 2);
-                g2d.drawString("Press any key to start the game.", frameWidth / 2 - 100, frameHeight / 2 + 30);
-                g2d.drawString("WWW.GAMETUTORIAL.NET", 7, frameHeight - 5);
+                g2d.drawString("시작하려면 아무 키나 누르세요.", frameWidth / 2 - 100, frameHeight / 2 + 30);
+
+                placeMyPage(true);
+
+                scoreHelper.getRank();
+                scoreHelper.drawRank(g2d);
             break;
             case OPTIONS:
                 //...
             break;
             case GAME_CONTENT_LOADING:
                 g2d.setColor(Color.white);
-                g2d.drawString("GAME is LOADING", frameWidth / 2 - 50, frameHeight / 2);
+                g2d.drawString("로드 중...", frameWidth / 2 - 50, frameHeight / 2);
             break;
         }
     }
@@ -295,21 +311,16 @@ public class Framework extends Canvas {
             case MAIN_MENU:
                 newGame();
             break;
+
             case GAMEOVER:
                 if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER)
                     restartGame();
             break;
         }
     }
-    
-    /**
-     * This method is called when mouse button is clicked.
-     * 
-     * @param e MouseEvent
-     */
+
     @Override
-    public void mouseClicked(MouseEvent e)
-    {
-        
+    public void update(Point p) {
+        System.out.println("axis changed : in Framework called. : " + p);
     }
 }

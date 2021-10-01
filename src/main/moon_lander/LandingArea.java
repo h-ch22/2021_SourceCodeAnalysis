@@ -63,8 +63,7 @@ public class LandingArea {
             Logger.getLogger(LandingArea.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
     public void Draw(Graphics2D g2d)
     {
         g2d.drawImage(landingAreaImg, x, y, null);

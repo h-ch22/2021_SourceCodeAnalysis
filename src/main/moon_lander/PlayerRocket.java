@@ -1,5 +1,7 @@
 package main.moon_lander;
 
+import main.moon_lander.MobileController.MobileControlHelper;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -17,7 +19,7 @@ import javax.imageio.ImageIO;
  * @author www.gametutorial.net
  */
 
-public class PlayerRocket {
+public class PlayerRocket extends MobileControlHelper {
     
     /**
      * We use this to generate a random number for starting x coordinate of the rocket.
@@ -159,6 +161,7 @@ public class PlayerRocket {
      */
     public void Update()
     {
+        getUserControl();
         // Calculating speed for moving up or down.
         if(Canvas.keyboardKeyState(KeyEvent.VK_W))
             speedY -= speedAccelerating;
@@ -180,12 +183,17 @@ public class PlayerRocket {
         // Moves the rocket.
         x += speedX;
         y += speedY;
+
+        if(axisX != 0 && axisY != 0){
+            x += (axisX * 20);
+            y += (axisY * 20);
+        }
     }
     
     public void Draw(Graphics2D g2d)
     {
         g2d.setColor(Color.white);
-        g2d.drawString("Rocket coordinates: " + x + " : " + y, 5, 15);
+        g2d.drawString("로켓 좌표 : " + x + ", " + y, 5, 15);
         
         // If the rocket is landed.
         if(landed)

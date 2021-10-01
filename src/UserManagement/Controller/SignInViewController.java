@@ -10,10 +10,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SignInViewController implements ActionListener {
-    private SignInView signInView;
+public class SignInViewController extends UserManagement implements ActionListener {
+    private final SignInView signInView;
     private String email, password;
-    private UserManagement userManagement = new UserManagement();
 
     public SignInViewController(SignInView signInView) {
         this.signInView = signInView;
@@ -21,6 +20,47 @@ public class SignInViewController implements ActionListener {
         if (signInView != null){
             signInView.btn_signIn.addActionListener(this);
             signInView.btn_signUp.addActionListener(this);
+        }
+
+        if(!signInPrefs.get("email", "").equals("") && !signInPrefs.get("password", "").equals("")){
+            try{
+                email = decrypt(signInPrefs.get("email", ""));
+                password = decrypt(signInPrefs.get("password", ""));
+
+                doSignIn();
+            }  catch(Exception e){
+                e.printStackTrace();
+
+                JOptionPane.showMessageDialog(null, "정보를 복호화하는 중 오류가 발생했습니다.", "복호화 오류", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }
+
+    private void doSignIn(){
+        try {
+            int result = signIn(email, password);
+
+            if(result != 200){
+                signInView.btn_signIn.setEnabled(true);
+                signInView.signInPanel.setCursor(Cursor.getDefaultCursor());
+                JOptionPane.showMessageDialog(null, "입력한 정보와 일치하는 계정이 없습니다.", "로그인 오류", JOptionPane.WARNING_MESSAGE);
+            }
+
+            else{
+                if (signInView.checkBox_autoSignIn.isSelected()){
+                    registerAutoSignIn(encrypt(email), encrypt(password));
+                }
+
+                signInView.signInPanel.setCursor(Cursor.getDefaultCursor());
+                signInView.setVisible(false);
+
+                new Window();
+            }
+        } catch (Exception ex) {
+            signInView.btn_signIn.setEnabled(true);
+            signInView.signInPanel.setCursor(Cursor.getDefaultCursor());
+
+            ex.printStackTrace();
         }
     }
 
@@ -39,27 +79,8 @@ public class SignInViewController implements ActionListener {
                 signInView.btn_signIn.setEnabled(false);
 
                 signInView.signInPanel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                try {
-                    int result = userManagement.signIn(email, password);
 
-                    if(result != 200){
-                        signInView.btn_signIn.setEnabled(true);
-                        signInView.signInPanel.setCursor(Cursor.getDefaultCursor());
-                        JOptionPane.showMessageDialog(null, "입력한 정보와 일치하는 계정이 없습니다.", "로그인 오류", JOptionPane.WARNING_MESSAGE);
-                    }
-
-                    else{
-                        signInView.signInPanel.setCursor(Cursor.getDefaultCursor());
-                        signInView.setVisible(false);
-
-                        new Window();
-                    }
-                } catch (Exception ex) {
-                    signInView.btn_signIn.setEnabled(true);
-                    signInView.signInPanel.setCursor(Cursor.getDefaultCursor());
-
-                    ex.printStackTrace();
-                }
+                doSignIn();
             }
         }
 
