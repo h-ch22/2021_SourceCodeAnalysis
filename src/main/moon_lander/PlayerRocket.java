@@ -2,8 +2,7 @@ package main.moon_lander;
 
 import main.moon_lander.MobileController.MobileControlHelper;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -33,7 +32,7 @@ public class PlayerRocket extends MobileControlHelper {
     /**
      * Y coordinate of the rocket.
      */
-    public int y;
+    public int y, yAxis;
     
     /**
      * Is rocket landed?
@@ -147,7 +146,7 @@ public class PlayerRocket extends MobileControlHelper {
     {
         landed = false;
         crashed = false;
-        
+
         x = random.nextInt(Framework.frameWidth - rocketImgWidth);
         y = 10;
         
@@ -179,15 +178,12 @@ public class PlayerRocket extends MobileControlHelper {
             speedX += speedAccelerating;
         else if(speedX > 0)
             speedX -= speedStopping;
-        
-        // Moves the rocket.
+
+        speedX += axisX;
+        speedY -= axisY;
+
         x += speedX;
         y += speedY;
-
-        if(axisX != 0 && axisY != 0){
-            x += (axisX * 20);
-            y += (axisY * 20);
-        }
     }
     
     public void Draw(Graphics2D g2d)
@@ -209,10 +205,9 @@ public class PlayerRocket extends MobileControlHelper {
         else
         {
             // If player hold down a W key we draw rocket fire.
-            if(Canvas.keyboardKeyState(KeyEvent.VK_W))
+            if(Canvas.keyboardKeyState(KeyEvent.VK_W) || axisY > 0)
                 g2d.drawImage(rocketFireImg, x + 12, y + 66, null);
             g2d.drawImage(rocketImg, x, y, null);
         }
     }
-    
 }

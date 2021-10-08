@@ -60,8 +60,10 @@ public class Game extends ScoreManagement {
                 LoadContent();
                 
                 Framework.gameState = Framework.GameState.PLAYING;
+                controlHelper.updateGameStatus(Framework.gameState);
             }
         };
+
         threadForInitGame.start();
     }
     
@@ -100,6 +102,7 @@ public class Game extends ScoreManagement {
     public void RestartGame()
     {
         playerRocket.ResetPlayer();
+        controlHelper.updateGameStatus(Framework.GameState.PLAYING);
     }
     
     
@@ -113,7 +116,7 @@ public class Game extends ScoreManagement {
     {
         // Move the rocket
         playerRocket.Update();
-        
+        controlHelper.updateCoordinates(playerRocket.x, playerRocket.y);
         // Checks where the player rocket is. Is it still in the space or is it landed or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing area.
         if(playerRocket.y + playerRocket.rocketImgHeight - 10 > landingArea.y)
@@ -134,8 +137,8 @@ public class Game extends ScoreManagement {
             else
                 playerRocket.crashed = true;
 
-
             Framework.gameState = Framework.GameState.GAMEOVER;
+            controlHelper.updateGameStatus(Framework.gameState);
         }
     }
     

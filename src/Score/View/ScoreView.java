@@ -61,6 +61,7 @@ public class ScoreView extends JFrame {
 
         scrollPane.add(tableView);
         scrollPane.setViewportView(tableView);
+
         scorePanel.add(scrollPane);
         scorePanel.add(userInteractionPanel);
     }

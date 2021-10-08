@@ -1,66 +1,147 @@
 package main.moon_lander.MobileController;
 
 import UserManagement.Helper.UserManagement;
-import com.google.cloud.firestore.*;
+import com.google.firebase.database.*;
 import main.moon_lander.Framework;
-import main.moon_lander.MobileController.Observer.mobileControllerObservable;
-import main.moon_lander.MobileController.Observer.mobileControllerObserver;
+import main.moon_lander.Game;
 
-import javax.annotation.Nullable;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 
-public class MobileControlHelper extends UserManagement implements mobileControllerObservable {
-    protected int axisX = 0, axisY = 0;
-    private List<mobileControllerObserver> observerList = new ArrayList<>();
+public class MobileControlHelper extends UserManagement  {
+    private final DatabaseReference controllerRef = FirebaseDatabase.getInstance().getReference("Controllers");
+    private final DatabaseReference coordinateRef = FirebaseDatabase.getInstance().getReference("Coordinates").child(userRecord.getUid());
+    private final DatabaseReference statusRef = FirebaseDatabase.getInstance().getReference("GameStatus").child(userRecord.getUid());
+    private String gameStatus;
+    protected int axisX, axisY;
 
-    public void init(mobileControllerObserver o, Framework.GameState state){
+    public void updateCoordinates(int x, int y){
+        Map<String, Object> updateInfo = new HashMap<>();
+
+        updateInfo.put("x", x);
+        updateInfo.put("y", y);
+
+        coordinateRef.updateChildrenAsync(updateInfo);
+    }
+
+    public void updateGameStatus(Framework.GameState state){
         switch(state){
-            case GAME_CONTENT_LOADING -> addObserver(o);
-            case GAMEOVER -> disconnect(o);
+            case PLAYING :
+                gameStatus = "PLAYING";
+                break;
+
+            case MAIN_MENU :
+            case GAME_CONTENT_LOADING :
+            case OPTIONS :
+            case STARTING :
+            case DESTROYED :
+            case GAMEOVER :
+                gameStatus = "GAME OVER";
         }
+
+        Map<String, Object> status = new HashMap<>();
+
+        status.put("Status", gameStatus);
+
+        statusRef.updateChildrenAsync(status);
+    }
+
+    public void receiveGameSTART(Framework game){
+        statusRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
+                if(snapshot.getKey().equals(userRecord.getUid())){
+                    String status = String.valueOf(snapshot.child("Status").getValue());
+
+                    if(status.equals("REQUEST TO START")){
+                        if(Framework.gameState == Framework.GameState.MAIN_MENU){
+                            game.newGame();
+                        }
+
+                        else if(Framework.gameState == Framework.GameState.GAMEOVER){
+                            game.restartGame();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot snapshot, String previousChildName) {
+                if(snapshot.getKey().equals(userRecord.getUid())){
+                    String status = String.valueOf(snapshot.child("Status").getValue());
+
+                    if(status.equals("REQUEST TO START")){
+                        if(Framework.gameState == Framework.GameState.MAIN_MENU){
+                            game.newGame();
+                        }
+
+                        else if(Framework.gameState == Framework.GameState.GAMEOVER){
+                            game.restartGame();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot snapshot, String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
     }
 
     public void getUserControl(){
-        try{
-            db.collection("Users")
-                    .whereEqualTo("mail", encrypt(userRecord.getEmail()))
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirestoreException error) {
-                            if (error != null){
-                                System.out.println("Failed Listen : " + error);
-                            }
+        controllerRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
+                if(snapshot.getKey().equals(userRecord.getUid())){
+                    String xAxis = String.valueOf(snapshot.child("xAxis").getValue());
+                    String yAxis = String.valueOf(snapshot.child("yAxis").getValue());
 
-                            for(DocumentSnapshot doc : value){
-                                axisX = Integer.parseInt(Objects.requireNonNullElse(doc.get("xAxis"), 0).toString());
-                                axisY = Integer.parseInt(Objects.requireNonNullElse(doc.get("yAxis"), 0).toString());
-                            }
+                    double axisX_Double = Double.parseDouble(xAxis);
+                    double axisY_Double = Double.parseDouble(yAxis);
 
-                            updateAxis();
-                        }
-                    });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+                    axisX = (int) axisX_Double;
+                    axisY = (int) axisY_Double;
+                }
+            }
 
-    @Override
-    public void addObserver(mobileControllerObserver o) {
-        observerList.add(o);
+            @Override
+            public void onChildChanged(DataSnapshot snapshot, String previousChildName) {
+                if(snapshot.getKey().equals(userRecord.getUid())){
+                    String xAxis = String.valueOf(snapshot.child("xAxis").getValue());
+                    String yAxis = String.valueOf(snapshot.child("yAxis").getValue());
 
-        getUserControl();
-    }
+                    double axisX_Double = Double.parseDouble(xAxis);
+                    double axisY_Double = Double.parseDouble(yAxis);
+                    axisX = (int) axisX_Double;
+                    axisY = (int) axisY_Double;
+                }
+            }
 
-    @Override
-    public void disconnect(mobileControllerObserver o) {
-        observerList.remove(o);
-    }
+            @Override
+            public void onChildRemoved(DataSnapshot snapshot) {
 
-    @Override
-    public void updateAxis() {
-        observerList.forEach(mobileControllerObserver -> mobileControllerObserver.update(new Point(axisX, axisY)));
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot snapshot, String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
     }
 }

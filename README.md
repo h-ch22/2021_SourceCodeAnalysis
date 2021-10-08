@@ -16,3 +16,6 @@
 
 > ### Oct 01, 2021
 > #### My Page is now available.
+
+> ### Oct 08, 2021
+> #### Mobile Control is now available.

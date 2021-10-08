@@ -6,29 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="f1a9aadb-1d81-4b36-bdb0-a92c8547b5c4" name="Changes" comment="SignUp/SignIn is now available.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/fonts/Maplestory_OTF_Bold.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/fonts/Maplestory_OTF_Light.otf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/images/background.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/images/landing_area.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/images/menu.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/images/red_border.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/images/rocket.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/images/rocket_crashed.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/images/rocket_fire.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/images/rocket_landed.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/include/moonlader-serviceAccount.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserManagement/Controller/SignInViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserManagement/Controller/SignInViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserManagement/Controller/SignUpViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserManagement/Controller/SignUpViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Score/View/ScoreView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Score/View/ScoreView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UserManagement/Helper/UserManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserManagement/Helper/UserManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserManagement/View/SignInView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserManagement/View/SignInView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Canvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Canvas.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/LandingArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/LandingArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/MobileController/Observer/mobileControllerObservable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/MobileController/Observer/mobileControllerObserver.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Window.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/net/Helper/AES256Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/net/Helper/AES256Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/net/Helper/SetEnvironment.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,8 +90,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -232,7 +218,15 @@
       <workItem from="1632987969213" duration="475000" />
       <workItem from="1633008230055" duration="2000" />
       <workItem from="1633065413408" duration="6000" />
-      <workItem from="1633066050644" duration="3949000" />
+      <workItem from="1633066050644" duration="8416000" />
+      <workItem from="1633149354099" duration="1210000" />
+      <workItem from="1633258999397" duration="310000" />
+      <workItem from="1633259631549" duration="3253000" />
+      <workItem from="1633399171730" duration="23000" />
+      <workItem from="1633413246147" duration="989000" />
+      <workItem from="1633504881288" duration="7983000" />
+      <workItem from="1633676634070" duration="3826000" />
+      <workItem from="1633681950936" duration="50000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp/SignIn is now available.">
       <created>1632372256959</created>

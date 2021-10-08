@@ -2,7 +2,6 @@ package main.moon_lander;
 
 import Score.Helper.ScoreManagement;
 import main.moon_lander.MobileController.MobileControlHelper;
-import main.moon_lander.Window;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -57,7 +56,7 @@ public class Framework extends Canvas {
     /**
      * Possible states of the game
      */
-    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING, GAMEOVER, DESTROYED}
+    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING, GAMEOVER, DESTROYED, PAUSED}
     /**
      * Current state of the game
      */
@@ -128,14 +127,13 @@ public class Framework extends Canvas {
     {
         // This two variables are used in VISUALIZING state of the game. We used them to wait some time so that we get correct frame/window resolution.
         long visualizingTime = 0, lastVisualizingTime = System.nanoTime();
-        
         // This variables are used for calculating the time that defines for how long we should put threat to sleep to meet the GAME_FPS.
         long beginTime, timeTaken, timeLeft;
         
         while(true)
         {
             beginTime = System.nanoTime();
-            
+
             switch (gameState)
             {
                 case PLAYING:
@@ -147,7 +145,7 @@ public class Framework extends Canvas {
 
                 break;
                 case GAMEOVER:
-                    controlHelper.init(this, gameState);
+                    controlHelper.receiveGameSTART(this);
 
                     break;
                 case MAIN_MENU:
@@ -164,8 +162,6 @@ public class Framework extends Canvas {
                     Initialize();
                     // Load files - images, sounds, ...
                     LoadContent();
-
-                    controlHelper.init(this, gameState);
 
                     // When all things that are called above finished, we change game status to main menu.
                     gameState = GameState.MAIN_MENU;
@@ -190,6 +186,9 @@ public class Framework extends Canvas {
                         lastVisualizingTime = System.nanoTime();
                     }
                 break;
+
+                case PAUSED:
+
             }
             
             // Repaint the screen.
@@ -251,7 +250,7 @@ public class Framework extends Canvas {
     /**
      * Starts new game.
      */
-    private void newGame()
+    public void newGame()
     {
         // We set gameTime to zero and lastTime to current time for later calculations.
         gameTime = 0;
@@ -263,7 +262,7 @@ public class Framework extends Canvas {
     /**
      *  Restart game - reset game time and call RestartGame() method of game object so that reset some variables.
      */
-    private void restartGame()
+    public void restartGame()
     {
         // We set gameTime to zero and lastTime to current time for later calculations.
         gameTime = 0;
@@ -317,10 +316,5 @@ public class Framework extends Canvas {
                     restartGame();
             break;
         }
-    }
-
-    @Override
-    public void update(Point p) {
-        System.out.println("axis changed : in Framework called. : " + p);
     }
 }

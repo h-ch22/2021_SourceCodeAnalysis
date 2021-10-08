@@ -12,7 +12,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.Helper.AES256Util;
 
-import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -43,7 +42,7 @@ public class UserManagement extends AES256Util {
 
                 options = FirebaseOptions.builder()
                         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                        .setDatabaseUrl("")
+                        .setDatabaseUrl("https://moonlader-4a071-default-rtdb.firebaseio.com/")
                         .build();
 
                 FirebaseApp.initializeApp(options);

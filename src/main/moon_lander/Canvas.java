@@ -6,13 +6,8 @@ import main.moon_lander.MobileController.Observer.mobileControllerObserver;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -21,13 +16,10 @@ import javax.swing.*;
  * @author www.gametutorial.net
  */
 
-public abstract class Canvas extends JPanel implements KeyListener, mobileControllerObserver {
+public abstract class Canvas extends JPanel implements KeyListener {
     
     // Keyboard states - Here are stored states for keyboard keys - is it down or not.
     private static boolean[] keyboardState = new boolean[525];
-    
-    // Mouse states - Here are stored states for mouse keys - is it down or not.
-    private static boolean[] mouseState = new boolean[3];
 
     public JButton btn_myPage;
     public Window gameWindow;
@@ -56,7 +48,7 @@ public abstract class Canvas extends JPanel implements KeyListener, mobileContro
 
         System.out.println(iconURL);
 
-        Image iconImg = ic_myPage.getImage(); // transform it
+        Image iconImg = ic_myPage.getImage();
         Image scaledIcon = iconImg.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         ic_myPage = new ImageIcon(scaledIcon);
 
