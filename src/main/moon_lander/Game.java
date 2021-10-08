@@ -7,7 +7,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,9 +46,12 @@ public class Game extends ScoreManagement {
     private BufferedImage redBorderImg;
 
     private MobileControlHelper controlHelper = new MobileControlHelper();
-    
 
-    public Game()
+    private int stage;
+    private String[] mapdata;
+    private BumperManager bumperManager;
+
+    public Game(int i)
     {
         super();
 
@@ -73,8 +79,27 @@ public class Game extends ScoreManagement {
      */
     private void Initialize()
     {
-        playerRocket = new PlayerRocket();
-        landingArea  = new LandingArea();
+    	try {
+			GetFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	int gravity = Integer.parseInt(mapdata[0]);
+    	int landingAreaSpeed = Integer.parseInt(mapdata[1]);
+        playerRocket = new PlayerRocket(gravity);
+        landingArea  = new LandingArea(landingAreaSpeed);
+        bumperManager = new BumperManager(stage);
+    }
+    
+    private void GetFile() throws IOException {
+    	InputStream in = this.getClass().getClassLoader().getResourceAsStream("MapData.txt");
+    	BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    	for(int i=0;i<stage;i++) {
+    		br.readLine();
+    	}
+    	mapdata = br.readLine().split(" ");
+    	br.close();
     }
     
     /**
@@ -102,6 +127,7 @@ public class Game extends ScoreManagement {
     public void RestartGame()
     {
         playerRocket.ResetPlayer();
+        landingArea.ResetArea();
         controlHelper.updateGameStatus(Framework.GameState.PLAYING);
     }
     
@@ -116,6 +142,7 @@ public class Game extends ScoreManagement {
     {
         // Move the rocket
         playerRocket.Update();
+        landingArea.Update();
         controlHelper.updateCoordinates(playerRocket.x, playerRocket.y);
         // Checks where the player rocket is. Is it still in the space or is it landed or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing area.
@@ -139,6 +166,8 @@ public class Game extends ScoreManagement {
 
             Framework.gameState = Framework.GameState.GAMEOVER;
             controlHelper.updateGameStatus(Framework.gameState);
+            bumperManager.checkCollision(playerRocket.x, playerRocket.y);
+            
         }
     }
     

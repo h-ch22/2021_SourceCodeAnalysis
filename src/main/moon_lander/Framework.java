@@ -256,7 +256,7 @@ public class Framework extends Canvas {
         gameTime = 0;
         lastTime = System.nanoTime();
         
-        game = new Game();
+        game = new Game(0); //temporalData(0~3)
     }
     
     /**

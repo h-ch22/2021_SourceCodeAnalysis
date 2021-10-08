@@ -61,11 +61,11 @@ public class PlayerRocket extends MobileControlHelper {
     /**
      * How fast and to which direction rocket is moving on x coordinate?
      */
-    private int speedX;
+    public static int speedX;
     /**
      * How fast and to which direction rocket is moving on y coordinate?
      */
-    public int speedY;
+    public static int speedY;
             
     /**
      * Image of the rocket in air.
@@ -84,19 +84,17 @@ public class PlayerRocket extends MobileControlHelper {
      */
     private BufferedImage rocketFireImg;
     
-    /**
-     * Width of rocket.
-     */
-    public int rocketImgWidth;
+    
+    public static int rocketImgWidth;
     /**
      * Height of rocket.
      */
-    public int rocketImgHeight;
+    public static int rocketImgHeight;
     
     
-    public PlayerRocket()
+    public PlayerRocket(int i)
     {
-        Initialize();
+        Initialize(i);
         LoadContent();
         
         // Now that we have rocketImgWidth we set starting x coordinate.
@@ -104,14 +102,14 @@ public class PlayerRocket extends MobileControlHelper {
     }
     
     
-    private void Initialize()
+    private void Initialize(int i)
     {
         random = new Random();
         
         ResetPlayer();
         
         speedAccelerating = 2;
-        speedStopping = 1;
+        speedStopping = 1 + i;
         
         topLandingSpeed = 5;
     }
@@ -189,7 +187,7 @@ public class PlayerRocket extends MobileControlHelper {
     public void Draw(Graphics2D g2d)
     {
         g2d.setColor(Color.white);
-        g2d.drawString("로켓 좌표 : " + x + ", " + y, 5, 15);
+        g2d.drawString("Rocket coordinates: " + x + " : " + y, 5, 15);
         
         // If the rocket is landed.
         if(landed)

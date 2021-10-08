@@ -1,7 +1,6 @@
 package main.moon_lander;
 
 import main.moon_lander.Controller.CanvasViewController;
-import main.moon_lander.MobileController.Observer.mobileControllerObserver;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

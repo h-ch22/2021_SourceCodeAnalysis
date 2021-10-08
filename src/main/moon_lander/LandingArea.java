@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -35,20 +36,28 @@ public class LandingArea {
      */
     public int landingAreaImgWidth;
     
+    public boolean isGoingRight;
     
-    public LandingArea()
+    public int vecticalPer100ms=5;
+    
+    public long waitTime=0;
+    
+    
+    public LandingArea(int i)
     {
-        Initialize();
+        Initialize(i);
         LoadContent();
     }
     
     
-    private void Initialize()
+    private void Initialize(int i)
     {   
         // X coordinate of the landing area is at 46% frame width.
         x = (int)(Framework.frameWidth * 0.46);
         // Y coordinate of the landing area is at 86% frame height.
         y = (int)(Framework.frameHeight * 0.88);
+        
+        vecticalPer100ms = 5 + i;//��Ȯ���� mapdata.txt�� i*2�� ������ �ι�° ������
     }
     
     private void LoadContent()
@@ -64,6 +73,31 @@ public class LandingArea {
         }
     }
 
+    public void Update() {
+	    if(System.currentTimeMillis()-waitTime>100) {
+	    	waitTime=System.currentTimeMillis();
+	    	
+	    	if(isGoingRight) { x += vecticalPer100ms;}
+		    else { x -= vecticalPer100ms;}
+		    	
+		    if(x<=0) {
+		    	x=0;
+		    	isGoingRight = true;
+		    }
+		    else if(x+landingAreaImgWidth>Framework.frameWidth) {
+		    	x=Framework.frameWidth-landingAreaImgWidth;
+		    	isGoingRight = false;
+		    }
+	    }
+    		
+    }
+    
+    public void ResetArea() {
+    	Random random = new Random();
+    	x=random.nextInt(Framework.frameWidth-landingAreaImgWidth);
+    	isGoingRight=random.nextBoolean();
+    }
+    
     public void Draw(Graphics2D g2d)
     {
         g2d.drawImage(landingAreaImg, x, y, null);
