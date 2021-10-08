@@ -6,15 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="f1a9aadb-1d81-4b36-bdb0-a92c8547b5c4" name="Changes" comment="SignUp/SignIn is now available.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Score/View/ScoreView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Score/View/ScoreView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserManagement/Helper/UserManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserManagement/Helper/UserManagement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Canvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Canvas.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/MobileController/Observer/mobileControllerObservable.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/MobileController/Observer/mobileControllerObserver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Window.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,6 +222,11 @@
       <workItem from="1633504881288" duration="7983000" />
       <workItem from="1633676634070" duration="3826000" />
       <workItem from="1633681950936" duration="50000" />
+      <workItem from="1633682360822" duration="76000" />
+      <workItem from="1633682622051" duration="322000" />
+      <workItem from="1633683119713" duration="25000" />
+      <workItem from="1633683254260" duration="555000" />
+      <workItem from="1633684475921" duration="10000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp/SignIn is now available.">
       <created>1632372256959</created>

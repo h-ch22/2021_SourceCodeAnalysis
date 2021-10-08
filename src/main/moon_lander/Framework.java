@@ -145,12 +145,10 @@ public class Framework extends Canvas {
 
                 break;
                 case GAMEOVER:
+                case MAIN_MENU:
                     controlHelper.receiveGameSTART(this);
 
                     break;
-                case MAIN_MENU:
-                    //...
-                break;
                 case OPTIONS:
                     //...
                 break;
