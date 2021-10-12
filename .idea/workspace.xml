@@ -6,10 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="f1a9aadb-1d81-4b36-bdb0-a92c8547b5c4" name="Changes" comment="SignUp/SignIn is now available.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Canvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Canvas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/LandingArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/LandingArea.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/images/img.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,16 +115,24 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/moon_lander" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+    <property name="two.files.diff.last.used.file" value="$USER_HOME$/Downloads/2021_SourceCodeAnalysis-Kim-s-Branches/src/main/moon_lander/Framework.java" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/moon_lander" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/resources/include" />
+      <recent name="$PROJECT_DIR$/src/resources/images" />
+      <recent name="$PROJECT_DIR$/src/resources" />
+      <recent name="$PROJECT_DIR$/src/main/moon_lander" />
       <recent name="$PROJECT_DIR$/resources/images" />
-      <recent name="$PROJECT_DIR$/resources/include" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.MoonLader [runMain]">
@@ -227,6 +238,10 @@
       <workItem from="1633683119713" duration="25000" />
       <workItem from="1633683254260" duration="555000" />
       <workItem from="1633684475921" duration="10000" />
+      <workItem from="1633684624394" duration="539000" />
+      <workItem from="1633869233592" duration="656000" />
+      <workItem from="1633874332390" duration="1889000" />
+      <workItem from="1634039724409" duration="2664000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp/SignIn is now available.">
       <created>1632372256959</created>

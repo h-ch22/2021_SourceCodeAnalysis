@@ -7,12 +7,14 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.*;
 
 /**
  * Actual game.
@@ -36,16 +38,22 @@ public class Game extends ScoreManagement {
      * Game background image.
      */
     private BufferedImage backgroundImg;
-    
+
+    private BufferedImage backgroundEarthImg;
+
+    private BufferedImage backgroundSpaceImg;
     /**
      * Red border of the frame. It is used when player crash the rocket.
      */
     private BufferedImage redBorderImg;
 
     private MobileControlHelper controlHelper = new MobileControlHelper();
-    
 
-    public Game()
+    private int stage;
+    private String[] mapdata;
+    private BumperManager bumperManager;
+
+    public Game(int i)
     {
         super();
 
@@ -58,8 +66,8 @@ public class Game extends ScoreManagement {
                 Initialize();
                 // Load game files (images, sounds, ...)
                 LoadContent();
-                
-                Framework.gameState = Framework.GameState.PLAYING;
+                Music.playMusic("src/resources/musics/backgroundmusic.wav",true);
+                Framework.gameState = Framework.GameState.PLAYING_EARTH;
                 controlHelper.updateGameStatus(Framework.gameState);
             }
         };
@@ -73,8 +81,27 @@ public class Game extends ScoreManagement {
      */
     private void Initialize()
     {
-        playerRocket = new PlayerRocket();
-        landingArea  = new LandingArea();
+    	try {
+			GetFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	int gravity = Integer.parseInt(mapdata[0]);
+    	int landingAreaSpeed = Integer.parseInt(mapdata[1]);
+        playerRocket = new PlayerRocket(gravity);
+        landingArea  = new LandingArea(landingAreaSpeed);
+        bumperManager = new BumperManager(stage);
+    }
+
+    private void GetFile() throws IOException {
+    	InputStream in = this.getClass().getClassLoader().getResourceAsStream("MapData.txt");
+    	BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    	for(int i=0;i<stage;i++) {
+    		br.readLine();
+    	}
+    	mapdata = br.readLine().split(" ");
+    	br.close();
     }
     
     /**
@@ -86,7 +113,11 @@ public class Game extends ScoreManagement {
         {
             URL backgroundImgUrl = this.getClass().getClassLoader().getResource("background.jpg");
             backgroundImg = ImageIO.read(backgroundImgUrl);
-            
+            URL backgroundEarthImgUrl = this.getClass().getClassLoader().getResource("background_earth.jpg");
+            backgroundEarthImg = ImageIO.read(backgroundEarthImgUrl);
+            URL backgroundSpaceImgUrl = this.getClass().getClassLoader().getResource("background_space.jpg");
+            backgroundSpaceImg = ImageIO.read(backgroundSpaceImgUrl);
+
             URL redBorderImgUrl = this.getClass().getClassLoader().getResource("red_border.png");
             redBorderImg = ImageIO.read(redBorderImgUrl);
         }
@@ -102,7 +133,8 @@ public class Game extends ScoreManagement {
     public void RestartGame()
     {
         playerRocket.ResetPlayer();
-        controlHelper.updateGameStatus(Framework.GameState.PLAYING);
+        landingArea.ResetArea();
+        controlHelper.updateGameStatus(Framework.GameState.PLAYING_EARTH);
     }
     
     
@@ -116,29 +148,44 @@ public class Game extends ScoreManagement {
     {
         // Move the rocket
         playerRocket.Update();
+        landingArea.Update();
         controlHelper.updateCoordinates(playerRocket.x, playerRocket.y);
         // Checks where the player rocket is. Is it still in the space or is it landed or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing area.
-        if(playerRocket.y + playerRocket.rocketImgHeight - 10 > landingArea.y)
-        {
-            // Here we check if the rocket is over landing area.
-            if((playerRocket.x > landingArea.x) && (playerRocket.x < landingArea.x + landingArea.landingAreaImgWidth - playerRocket.rocketImgWidth))
-            {
-                // Here we check if the rocket speed isn't too high.
-                if(playerRocket.speedY <= playerRocket.topLandingSpeed){
-                    playerRocket.landed = true;
+        if (Framework.gameState == Framework.GameState.PLAYING_MOON) {
+            if (playerRocket.y + playerRocket.rocketImgHeight - 10 > landingArea.y) {
+                // Here we check if the rocket is over landing area.
+                if ((playerRocket.x > landingArea.x) && (playerRocket.x < landingArea.x + landingArea.landingAreaImgWidth - playerRocket.rocketImgWidth)) {
+                    // Here we check if the rocket speed isn't too high.
+                    if (playerRocket.speedY <= playerRocket.topLandingSpeed) {
+                        playerRocket.landed = true;
 
-                    updateScore(gameTime / Framework.secInNanosec);
-                }
-
-                else
+                        updateScore(gameTime / Framework.secInNanosec);
+                    } else
+                        playerRocket.crashed = true;
+                } else
                     playerRocket.crashed = true;
-            }
-            else
-                playerRocket.crashed = true;
 
-            Framework.gameState = Framework.GameState.GAMEOVER;
-            controlHelper.updateGameStatus(Framework.gameState);
+                bumperManager.checkCollision(playerRocket.x, playerRocket.y);
+                Framework.gameState = Framework.GameState.GAMEOVER;
+                controlHelper.updateGameStatus(Framework.gameState);
+            }
+        }
+        if(Framework.gameState==Framework.GameState.PLAYING_EARTH) {
+            if(playerRocket.y<-70) {
+                playerRocket.y=(int)(Framework.frameHeight * 0.9);
+                Framework.gameState = Framework.GameState.PLAYING_SPACE;
+
+            }
+
+        }
+        if(Framework.gameState==Framework.GameState.PLAYING_SPACE) {
+            if(playerRocket.y<-70) {
+                Framework.gameState = Framework.GameState.PLAYING_MOON;
+                playerRocket.y=0;
+                playerRocket.speedY=0;
+            }
+
         }
     }
     
@@ -156,7 +203,24 @@ public class Game extends ScoreManagement {
         
         playerRocket.Draw(g2d);
     }
-    
+    public void DrawEarth(Graphics2D g2d, Point mousePosition)
+    {
+        g2d.drawImage(backgroundEarthImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
+
+        playerRocket.Draw(g2d);
+    }
+    public void DrawSpace(Graphics2D g2d, Point mousePosition)
+    {
+        g2d.drawImage(backgroundSpaceImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
+
+        playerRocket.Draw(g2d);
+    }
+    public void DrawPause(Graphics2D g2d, Point mousePosition)
+    {
+        g2d.drawString("PAUSE", Framework.frameWidth / 2 - 10, Framework.frameHeight / 2);
+
+        playerRocket.Draw(g2d);
+    }
     
     /**
      * Draw the game over screen.
@@ -165,7 +229,7 @@ public class Game extends ScoreManagement {
      * @param mousePosition Current mouse position.
      * @param gameTime Game time in nanoseconds.
      */
-    public void DrawGameOver(Graphics2D g2d, Point mousePosition, long gameTime)
+    public void DrawGameOver(Graphics2D g2d, Point mousePosition, long gameTime, long pauseTime)
     {
         Draw(g2d, mousePosition);
         
@@ -174,7 +238,7 @@ public class Game extends ScoreManagement {
         if(playerRocket.landed)
         {
             g2d.drawString("잘했어요!", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3);
-            g2d.drawString(gameTime / Framework.secInNanosec + "초만에 성공했습니다.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
+            g2d.drawString((gameTime-pauseTime) / Framework.secInNanosec + "초만에 성공했습니다.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
         }
         else
         {

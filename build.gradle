@@ -27,6 +27,7 @@ sourceSets{
             srcDirs "src/resources/fonts"
             srcDirs "src/resources/images"
             srcDirs "src/resources/include"
+            srcDirs "src/resources/musics"
         }
     }
 }
