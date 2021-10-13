@@ -23,6 +23,10 @@ class Bumper {
      */
     private BufferedImage bumperImg;
     
+    public boolean active;
+    public long activeTime;
+    
+    
     /**
      * Width of landing area.
      */
@@ -56,4 +60,6 @@ class Bumper {
     {
         g2d.drawImage(bumperImg, x-(bumperImg.getWidth()/2), y-(bumperImg.getWidth()/2), null);
     }
+    
+    
 }

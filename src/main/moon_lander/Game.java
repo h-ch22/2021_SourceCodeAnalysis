@@ -54,6 +54,8 @@ public class Game extends ScoreManagement {
     public Game(int i)
     {
         super();
+        
+        stage = i;
 
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
         
@@ -166,9 +168,10 @@ public class Game extends ScoreManagement {
 
             Framework.gameState = Framework.GameState.GAMEOVER;
             controlHelper.updateGameStatus(Framework.gameState);
-            bumperManager.checkCollision(playerRocket.x, playerRocket.y);
             
         }
+        
+        bumperManager.checkCollision(playerRocket.x, playerRocket.y);
     }
     
     /**
@@ -184,6 +187,8 @@ public class Game extends ScoreManagement {
         landingArea.Draw(g2d);
         
         playerRocket.Draw(g2d);
+        
+        bumperManager.Draw(g2d);
     }
     
     

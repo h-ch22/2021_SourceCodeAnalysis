@@ -47,7 +47,7 @@ public class Framework extends Canvas {
      * FPS - Frames per second
      * How many times per second the game should update?
      */
-    private final int GAME_FPS = 16;
+    private final int GAME_FPS = 24;
     /**
      * Pause between updates. It is in nanoseconds.
      */
@@ -256,7 +256,7 @@ public class Framework extends Canvas {
         gameTime = 0;
         lastTime = System.nanoTime();
         
-        game = new Game(0); //temporalData(0~3)
+        game = new Game(1); //temporalData(0~4)
     }
     
     /**
