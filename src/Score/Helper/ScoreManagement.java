@@ -80,7 +80,7 @@ public class ScoreManagement extends UserManagement {
                         case MODIFIED :
                             CollectionReference rankRef = db.collection("Users");
 
-                            Query query = rankRef.orderBy("maxScore", Query.Direction.ASCENDING).limit(3);
+                            Query query = rankRef.orderBy("maxScore", Query.Direction.DESCENDING).limit(3);
                             ApiFuture<QuerySnapshot> queryResult = query.get();
 
                             try {

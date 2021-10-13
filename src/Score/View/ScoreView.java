@@ -1,12 +1,13 @@
 package Score.View;
 
+import Frameworks.Models.placePanel;
 import Score.Controller.ScoreViewController;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Vector;
 
-public class ScoreView extends JFrame {
+public class ScoreView extends JFrame implements placePanel {
     public JPanel scorePanel;
     public JPanel userInteractionPanel;
     public JButton btn_close, btn_signOut;
@@ -28,7 +29,7 @@ public class ScoreView extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        placePanel();
+        placePanel(scorePanel);
 
         new ScoreViewController(this, gameWindow);
 
@@ -37,7 +38,7 @@ public class ScoreView extends JFrame {
         setVisible(true);
     }
 
-    private void placePanel(){
+    public void placePanel(JPanel panel){
         scrollPane = new JScrollPane();
         userInteractionPanel = new JPanel();
         btn_close = new JButton("닫기");
@@ -62,7 +63,7 @@ public class ScoreView extends JFrame {
         scrollPane.add(tableView);
         scrollPane.setViewportView(tableView);
 
-        scorePanel.add(scrollPane);
-        scorePanel.add(userInteractionPanel);
+        panel.add(scrollPane);
+        panel.add(userInteractionPanel);
     }
 }

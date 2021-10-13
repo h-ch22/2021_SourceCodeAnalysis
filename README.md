@@ -22,3 +22,6 @@
 
 > ### Oct 12, 2021
 > #### RC 1 for 1st Project Report.
+
+> ### Oct 13, 2021
+> #### Final Release for 1st Project.

@@ -50,7 +50,7 @@ public class Framework extends Canvas {
      * FPS - Frames per second
      * How many times per second the game should update?
      */
-    private final int GAME_FPS = 16;
+    private final int GAME_FPS = 24;
     /**
      * Pause between updates. It is in nanoseconds.
      */
@@ -114,7 +114,7 @@ public class Framework extends Canvas {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                Button1Pressed();
+                Button2Pressed();
             }
 
             @Override
@@ -129,7 +129,7 @@ public class Framework extends Canvas {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                Button1Pressed();
+                Button3Pressed();
             }
 
             @Override
@@ -144,7 +144,7 @@ public class Framework extends Canvas {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                Button1Pressed();
+                Button4Pressed();
             }
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -157,7 +157,7 @@ public class Framework extends Canvas {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                Button1Pressed();
+                Button5Pressed();
             }
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -177,6 +177,31 @@ public class Framework extends Canvas {
     public void Button1Pressed(){
 
         gameState = GameState.PLAYING_EARTH;
+        Game.stage = 0;
+        newGame();
+    }
+    public void Button2Pressed(){
+
+        gameState = GameState.PLAYING_EARTH;
+        Game.stage = 1;
+        newGame();
+    }
+    public void Button3Pressed(){
+
+        gameState = GameState.PLAYING_EARTH;
+        Game.stage = 2;
+        newGame();
+    }
+    public void Button4Pressed(){
+
+        gameState = GameState.PLAYING_EARTH;
+        Game.stage = 3;
+        newGame();
+    }
+    public void Button5Pressed(){
+
+        gameState = GameState.PLAYING_EARTH;
+        Game.stage = 4;
         newGame();
     }
     // The actual game
@@ -417,7 +442,7 @@ public class Framework extends Canvas {
         gameTime = 0;
         lastTime = System.nanoTime();
         pauseTime = 0;
-        game = new Game(0);
+        game = new Game(1);
     }
     
     /**

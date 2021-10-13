@@ -28,11 +28,11 @@ public class PlayerRocket extends MobileControlHelper {
     /**
      * X coordinate of the rocket.
      */
-    public int x;
+    public static int x;
     /**
      * Y coordinate of the rocket.
      */
-    public int y, yAxis;
+    public static int y, yAxis;
     
     /**
      * Is rocket landed?
@@ -94,7 +94,9 @@ public class PlayerRocket extends MobileControlHelper {
      */
     public static int rocketImgHeight;
     
-    
+    private int gravity;
+
+
     public PlayerRocket(int i)
     {
         Initialize(i);
@@ -112,7 +114,9 @@ public class PlayerRocket extends MobileControlHelper {
         ResetPlayer();
         
         speedAccelerating = 2;
-        speedStopping = 1 + i;
+        speedStopping = 1;
+
+        gravity=i;
         
         topLandingSpeed = 5;
     }
@@ -169,7 +173,7 @@ public class PlayerRocket extends MobileControlHelper {
             if (Canvas.keyboardKeyState(KeyEvent.VK_W))
                 speedY -= speedAccelerating;
             else
-                speedY += speedStopping;
+                speedY += speedStopping+gravity;
 
             // Calculating speed for moving or stopping to the left.
             if (Canvas.keyboardKeyState(KeyEvent.VK_A))

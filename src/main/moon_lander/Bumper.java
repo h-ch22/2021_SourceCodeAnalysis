@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 class Bumper {
-	/**
+    /**
      * X coordinate of the landing area.
      */
     private int x;
@@ -17,29 +17,33 @@ class Bumper {
      * Y coordinate of the landing area.
      */
     private int y;
-    
+
     /**
      * Image of landing area.
      */
     private BufferedImage bumperImg;
-    
+
+    public boolean active;
+    public long activeTime;
+
+
     /**
      * Width of landing area.
      */
-    
+
     public Bumper(int x, int y)
     {
         Initialize(x,y);
         LoadContent();
     }
-    
-    
+
+
     private void Initialize(int x, int y)
-    {   
+    {
         this.x = x;
         this.y = y;
     }
-    
+
     private void LoadContent()
     {
         try
@@ -51,9 +55,11 @@ class Bumper {
             Logger.getLogger(LandingArea.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void Draw(Graphics2D g2d)
     {
         g2d.drawImage(bumperImg, x-(bumperImg.getWidth()/2), y-(bumperImg.getWidth()/2), null);
     }
+
+
 }

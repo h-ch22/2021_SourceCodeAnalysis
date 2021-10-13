@@ -49,13 +49,16 @@ public class Game extends ScoreManagement {
 
     private MobileControlHelper controlHelper = new MobileControlHelper();
 
-    private int stage;
+    static int stage;
+
     private String[] mapdata;
     private BumperManager bumperManager;
 
     public Game(int i)
     {
         super();
+
+        stage = i;
 
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
         
@@ -166,10 +169,11 @@ public class Game extends ScoreManagement {
                 } else
                     playerRocket.crashed = true;
 
-                bumperManager.checkCollision(playerRocket.x, playerRocket.y);
                 Framework.gameState = Framework.GameState.GAMEOVER;
                 controlHelper.updateGameStatus(Framework.gameState);
             }
+
+            bumperManager.checkCollision(playerRocket.x, playerRocket.y);
         }
         if(Framework.gameState==Framework.GameState.PLAYING_EARTH) {
             if(playerRocket.y<-70) {
@@ -202,6 +206,8 @@ public class Game extends ScoreManagement {
         landingArea.Draw(g2d);
         
         playerRocket.Draw(g2d);
+
+        bumperManager.Draw(g2d);
     }
     public void DrawEarth(Graphics2D g2d, Point mousePosition)
     {
