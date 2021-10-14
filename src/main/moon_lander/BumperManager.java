@@ -23,8 +23,8 @@ public class BumperManager {
     
     private int[][] bumperXY;
     
-    private int rocketW=PlayerRocket.rocketImgWidth-16;
-    private int rocketH=PlayerRocket.rocketImgHeight-4;
+    private int rocketW=PlayerRocket.rocketImgWidth-30;
+    private int rocketH=PlayerRocket.rocketImgHeight-8;
     
     private int bumperRange;
 	private int amountOfBumper;
@@ -64,7 +64,7 @@ public class BumperManager {
         {
             URL BumperImgUrl = this.getClass().getClassLoader().getResource("bumper.png");
             BufferedImage bumperImg = ImageIO.read(BumperImgUrl);
-            bumperRange = bumperImg.getWidth()/2 - 5;
+            bumperRange = bumperImg.getWidth()/2 - 7;
             
         }
         catch (IOException ex) {
@@ -83,67 +83,92 @@ public class BumperManager {
    
     public void checkCollision(int x, int y)
     {
-    	x += 10;
-    	y += 2;
+    	
     	int speed = (int) Math.sqrt((Math.pow(PlayerRocket.speedX, 2)+Math.pow(PlayerRocket.speedY, 2)));
+    	if(speed<15) speed = 15;
+    	int temp;
+    	
+    	x += PlayerRocket.speedX+15;	//다음 프레임의 로켓 위치
+    	y += PlayerRocket.speedY+4;
+ 
+    	int dx = (int) ((Math.abs(PlayerRocket.speedX)<10) ? Math.signum(PlayerRocket.speedX)*10 : PlayerRocket.speedX);	//속도 보정
+    	int dy = (int) ((Math.abs(PlayerRocket.speedY)<10) ? Math.signum(PlayerRocket.speedY)*10 : PlayerRocket.speedY);
+    	
+    	int vx;		//범퍼에 의한 속도 변환값
+    	int vy;
     	
         for (int i = 0; i < amountOfBumper; i++) {
-        
-    		int tx = bumperXY[i][0];
+        	
+        	vx=0;
+        	vy=0;
+        	
+    		int tx = bumperXY[i][0];	//범퍼 위치
     		int ty = bumperXY[i][1];
-    		
     		if(!bumpers[i].active) {
-    			if(((y-bumperRange<=ty&&ty<y)
-	    				||(y+rocketH<ty&&ty<=y+rocketH+bumperRange))&&(x<tx&&tx<x+rocketH)) { //위 또는 아래에 있을 때
-	    			PlayerRocket.speedX *= -1;
-	    			if(Math.abs(PlayerRocket.speedY)<3) {
-	    				PlayerRocket.speedY = (y+rocketH/2<ty) ? -5 : 5;
-	    			}
+    			if((y-bumperRange<=ty&&ty<y)&&(x<tx&&tx<x+rocketW)) { //위에 있을 때
+	    			vy += (dy!=0) ? -dy : -10;
+	    			
+	    			System.out.print("{U-");
 	    		}
-	    		else if(((x-bumperRange<=tx&&tx<x)
-	    				||(x+rocketW<tx&&tx<=x+rocketW+bumperRange))&&(y<ty&&ty<y+rocketW)) {//왼쪽 또는 오른쪽에 있을 때
-	    			PlayerRocket.speedY *= -1;
-	    			if(Math.abs(PlayerRocket.speedX)<3) {
-	    				PlayerRocket.speedX = (x+rocketW/2<tx) ? -5 : 5;
-	    			}
+    			else if((y+rocketH<ty&&ty<=y+rocketH+bumperRange)&&(x<tx&&tx<x+rocketW)) { //아래에 있을 때
+	    			vy += (dy!=0) ? -dy : 10;
+	    			
+	    			System.out.print("{D-");
+	    		}
+	    		else if((x-bumperRange<=tx&&tx<x)&&(y<ty&&ty<y+rocketH)) {//왼쪽에 있을 때
+	    			vx += (dx!=0) ? -dx : -10;
+	    			System.out.print("{L-");
+	    		}
+	    		else if((x+rocketW<tx&&tx<=x+rocketW+bumperRange)&&(y<ty&&ty<y+rocketH)) {//오른쪽에 있을 때
+	    			vx += (dx!=0) ? -dx : 10;
+	    			System.out.print("{R-");
 	    		}
 	    		else if(checkBumperInside(x,y,tx,ty)) { //왼쪽 위
-	    			calculateSpeed(x-tx,y-ty, speed);
-	    			if(x<tx) PlayerRocket.speedX *=-1;
-	    			if(y<ty) PlayerRocket.speedY *=-1;
+	    			temp=calculateSpeed(x-tx,y-ty, speed);
+	    			vx += temp;
+	    			vy += Math.sqrt(Math.pow(speed, 2)-Math.pow(temp, 2));
+	    			System.out.print("{LU-");
 	    		}
 	    		else if(checkBumperInside(x+rocketW,y,tx,ty)) { //오른쪽 위
-	    			calculateSpeed(x+rocketW-tx,y-ty, speed);
-	    			if(tx<x+rocketW) PlayerRocket.speedX *=-1;
-	    			if(y<ty) PlayerRocket.speedY *=-1;
+	    			temp=calculateSpeed(x+rocketW-tx,y-ty, speed);
+	    			vx -= temp;
+	    			vy += Math.sqrt(Math.pow(speed, 2)-Math.pow(temp, 2));
+	    			System.out.print("{RU-");
 	    		}
 	    		else if(checkBumperInside(x,y+rocketH,tx,ty)) { //왼쪽 아래
-	    			calculateSpeed(x-tx,y+rocketH-ty, speed);
-	    			if(x<tx) PlayerRocket.speedX *=-1;
-	    			if(ty<y+rocketH) PlayerRocket.speedY *=-1;
+	    			temp=calculateSpeed(x-tx,(y+rocketH)-ty, speed);
+	    			vx += temp;
+	    			vy -= Math.sqrt(Math.pow(speed, 2)-Math.pow(temp, 2));
+	    			System.out.print("{LD-");
 	    		}
 	    		else if(checkBumperInside(x+rocketW,y+rocketH,tx,ty)) { //오른쪽 아래
-	    			calculateSpeed(x+rocketW-tx,y+rocketH-ty, speed);
-	    			if(tx<x+rocketW) PlayerRocket.speedX *=-1;
-	    			if(ty<y+rocketH) PlayerRocket.speedY *=-1;
+	    			temp=calculateSpeed((x+rocketW)-tx,(y+rocketH)-ty, speed);
+	    			vx -= temp;
+	    			vy -= Math.sqrt(Math.pow(speed, 2)-Math.pow(temp, 2));
+	    			System.out.print("{RD-");
 	    		}
 	    		
-	//    		else if((x<=tx&&tx<=x+rocketH)&&(y<=ty&&ty<=y+rocketW)){
-	//    			calculateSpeed(x+rocketW/2-tx, y+rocketH/2-ty, speed);
-	//    		}
+	    		else if((x<=tx&&tx<=x+rocketW)&&(y<=ty&&ty<=y+rocketH)){
+	    			temp=calculateSpeed((x+rocketW)/2-tx, (y+rocketH/2)-ty, speed);
+	    			vx += temp;
+	    			vy += Math.sqrt(Math.pow(speed, 2)-Math.pow(temp, 2));
+	    			System.out.print("{IN-");
+	    		}
     		}
     		
 	    	else {
-	    		if(System.currentTimeMillis()-bumpers[i].activeTime>50) {
+	    		if(System.currentTimeMillis()-bumpers[i].activeTime>100) {
 	    			bumpers[i].active=false;
 	    			bumpers[i].activeTime = System.currentTimeMillis();
 	    		}
 	    	}
-    		if((x<=tx&&tx<=x+rocketH)&&(y<=ty&&ty<=y+rocketW)) {
-    			PlayerRocket.x += tx+rocketH/2-x;
-    			PlayerRocket.y += ty+rocketH/2-y;
-    		}
     		
+    		if(vx!=0||vy!=0) {
+        		System.out.println("}");
+    			bumpers[i].active = true;
+    			PlayerRocket.speedX = (vx!=0) ? vx : PlayerRocket.speedX;
+    			PlayerRocket.speedY = (vy!=0) ? vy : PlayerRocket.speedY;
+    		}
     	}
     
     }
@@ -152,20 +177,16 @@ public class BumperManager {
     	return false;
     }
 
-    private void calculateSpeed(int x, int y, int v) {
+    private int calculateSpeed(int x, int y, int v) {
 
+    	int t=(int)Math.sqrt(v);
     	if(x!=0) {
-    		int t = (int) (((x)/Math.abs(x)) * v / Math.sqrt(Math.pow(y/x, 2)+1));
-    		int q = (int) (((x)/Math.abs(x))  * v / Math.sqrt(Math.pow(y/x, 2)+1) * y/x);
-    		PlayerRocket.speedX = t;
-    		PlayerRocket.speedY = q;
+    		t = (int) (v / Math.sqrt(Math.pow((double)y/x, 2)+1));
     	}
     	else if(y!=0) {
-    		int t = (int) (((y)/Math.abs(y)) * v / Math.sqrt(Math.pow(x/y, 2)+1));
-    		int q = (int) (((y)/Math.abs(y)) * v / Math.sqrt(Math.pow(x/y, 2)+1) * x/y);
-    		PlayerRocket.speedX = t;
-    		PlayerRocket.speedY = q;
+    		t = (int) (v / Math.sqrt(Math.pow((double)x/y, 2)+1));
     	}
+    	return t;
 	}
     
     public void Draw(Graphics2D g2d)
