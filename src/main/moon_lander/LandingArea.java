@@ -36,11 +36,11 @@ public class LandingArea {
      */
     public int landingAreaImgWidth;
     
-    public boolean isGoingRight;
+    private boolean isGoingRight;
     
-    public int vecticalPer100ms=5;
+    private int vecticalPer100ms=5;
     
-    public long waitTime=0;
+    private long waitTime=0;
     
     
     public LandingArea(int i)
