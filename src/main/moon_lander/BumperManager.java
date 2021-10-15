@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -107,52 +106,41 @@ public class BumperManager {
     		if(!bumpers[i].active) {
     			if((y-bumperRange<=ty&&ty<y)&&(x<tx&&tx<x+rocketW)) { //위에 있을 때
 	    			vy += (dy!=0) ? -dy : -10;
-	    			
-	    			System.out.print("{U-");
 	    		}
     			else if((y+rocketH<ty&&ty<=y+rocketH+bumperRange)&&(x<tx&&tx<x+rocketW)) { //아래에 있을 때
 	    			vy += (dy!=0) ? -dy : 10;
-	    			
-	    			System.out.print("{D-");
 	    		}
 	    		else if((x-bumperRange<=tx&&tx<x)&&(y<ty&&ty<y+rocketH)) {//왼쪽에 있을 때
 	    			vx += (dx!=0) ? -dx : -10;
-	    			System.out.print("{L-");
 	    		}
 	    		else if((x+rocketW<tx&&tx<=x+rocketW+bumperRange)&&(y<ty&&ty<y+rocketH)) {//오른쪽에 있을 때
 	    			vx += (dx!=0) ? -dx : 10;
-	    			System.out.print("{R-");
 	    		}
 	    		else if(checkBumperInside(x,y,tx,ty)) { //왼쪽 위
 	    			temp=calculateSpeed(x-tx,y-ty, speed);
 	    			vx += temp;
 	    			vy += Math.sqrt(Math.pow(speed, 2)-Math.pow(temp, 2));
-	    			System.out.print("{LU-");
 	    		}
 	    		else if(checkBumperInside(x+rocketW,y,tx,ty)) { //오른쪽 위
 	    			temp=calculateSpeed(x+rocketW-tx,y-ty, speed);
 	    			vx -= temp;
 	    			vy += Math.sqrt(Math.pow(speed, 2)-Math.pow(temp, 2));
-	    			System.out.print("{RU-");
 	    		}
 	    		else if(checkBumperInside(x,y+rocketH,tx,ty)) { //왼쪽 아래
 	    			temp=calculateSpeed(x-tx,(y+rocketH)-ty, speed);
 	    			vx += temp;
 	    			vy -= Math.sqrt(Math.pow(speed, 2)-Math.pow(temp, 2));
-	    			System.out.print("{LD-");
 	    		}
 	    		else if(checkBumperInside(x+rocketW,y+rocketH,tx,ty)) { //오른쪽 아래
 	    			temp=calculateSpeed((x+rocketW)-tx,(y+rocketH)-ty, speed);
 	    			vx -= temp;
 	    			vy -= Math.sqrt(Math.pow(speed, 2)-Math.pow(temp, 2));
-	    			System.out.print("{RD-");
 	    		}
 	    		
 	    		else if((x<=tx&&tx<=x+rocketW)&&(y<=ty&&ty<=y+rocketH)){
 	    			temp=calculateSpeed((x+rocketW)/2-tx, (y+rocketH/2)-ty, speed);
 	    			vx += temp;
 	    			vy += Math.sqrt(Math.pow(speed, 2)-Math.pow(temp, 2));
-	    			System.out.print("{IN-");
 	    		}
     		}
     		
@@ -164,7 +152,6 @@ public class BumperManager {
 	    	}
     		
     		if(vx!=0||vy!=0) {
-        		System.out.println("}");
     			bumpers[i].active = true;
     			PlayerRocket.speedX = (vx!=0) ? vx : PlayerRocket.speedX;
     			PlayerRocket.speedY = (vy!=0) ? vy : PlayerRocket.speedY;
