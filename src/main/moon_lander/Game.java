@@ -49,16 +49,16 @@ public class Game extends ScoreManagement {
 
     private MobileControlHelper controlHelper = new MobileControlHelper();
 
-    static int stage;
+    private int stage;
 
     private String[] mapdata;
     private BumperManager bumperManager;
 
-    public Game(int i)
+    public Game(int stage)
     {
         super();
 
-        stage = i;
+        this.stage = stage;
 
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
         
@@ -139,15 +139,8 @@ public class Game extends ScoreManagement {
         landingArea.ResetArea();
         controlHelper.updateGameStatus(Framework.GameState.PLAYING_EARTH);
     }
-    
-    
-    /**
-     * Update game logic.
-     * 
-     * @param gameTime gameTime of the game.
-     * @param mousePosition current mouse position.
-     */
-    public void UpdateGame(long gameTime, Point mousePosition)
+
+    public void UpdateGame(long gameTime, Point mousePosition, long pauseTime)
     {
         // Move the rocket
         playerRocket.Update();
@@ -163,7 +156,7 @@ public class Game extends ScoreManagement {
                     if (playerRocket.speedY <= playerRocket.topLandingSpeed) {
                         playerRocket.landed = true;
 
-                        updateScore(gameTime / Framework.secInNanosec);
+                        updateScore((stage + 1) * 10000 * ((gameTime-pauseTime) / Framework.secInNanosec), Integer.toString(stage + 1));
                     } else
                         playerRocket.crashed = true;
                 } else

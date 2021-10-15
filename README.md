@@ -25,3 +25,6 @@
 
 > ### Oct 13, 2021
 > #### Final Release for 1st Project.
+
+> ### Oct 15, 2021
+> #### Official Release for 1st Project.

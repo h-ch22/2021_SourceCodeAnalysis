@@ -6,17 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="f1a9aadb-1d81-4b36-bdb0-a92c8547b5c4" name="Changes" comment="SignUp/SignIn is now available.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/.firebaserc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/firebase.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/firestore.indexes.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/firestore.rules" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions/ScoreManagement.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/functions/package.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Score/Helper/ScoreManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Score/Helper/ScoreManagement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Score/View/ScoreView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Score/View/ScoreView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserManagement/View/SignInView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserManagement/View/SignInView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserManagement/View/SignUpView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserManagement/View/SignUpView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Bumper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Bumper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/BumperManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/BumperManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/include/BumperData.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/include/BumperData.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/include/MapData.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +130,7 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
-    <property name="two.files.diff.last.used.file" value="$USER_HOME$/Downloads/2021_SourceCodeAnalysis-Kim-s-Branches 2/src/main/moon_lander/Game.java" />
+    <property name="two.files.diff.last.used.file" value="$USER_HOME$/Downloads/2021_SourceCodeAnalysis-Kim-s-Branches 3/src/main/moon_lander/LandingArea.java" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -251,6 +256,15 @@
       <workItem from="1634042993605" duration="279000" />
       <workItem from="1634109174078" duration="5532000" />
       <workItem from="1634135033055" duration="501000" />
+      <workItem from="1634193342127" duration="2841000" />
+      <workItem from="1634208289947" duration="942000" />
+      <workItem from="1634221705384" duration="91000" />
+      <workItem from="1634223826611" duration="87000" />
+      <workItem from="1634269835474" duration="11606000" />
+      <workItem from="1634296407230" duration="6000" />
+      <workItem from="1634297916762" duration="1429000" />
+      <workItem from="1634302008779" duration="847000" />
+      <workItem from="1634307184156" duration="276000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp/SignIn is now available.">
       <created>1632372256959</created>

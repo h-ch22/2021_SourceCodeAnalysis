@@ -59,7 +59,7 @@ public class MobileControlHelper extends UserManagement  {
 
                     if(status.equals("REQUEST TO START")){
                         if(Framework.gameState == Framework.GameState.MAIN_MENU){
-                            game.newGame();
+                            game.newGame(0);
                         }
 
                         else if(Framework.gameState == Framework.GameState.GAMEOVER){
@@ -76,7 +76,7 @@ public class MobileControlHelper extends UserManagement  {
 
                     if(status.equals("REQUEST TO START")){
                         if(Framework.gameState == Framework.GameState.MAIN_MENU){
-                            game.newGame();
+                            game.newGame(0);
                         }
 
                         else if(Framework.gameState == Framework.GameState.GAMEOVER){

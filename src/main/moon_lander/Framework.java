@@ -177,32 +177,27 @@ public class Framework extends Canvas {
     public void Button1Pressed(){
 
         gameState = GameState.PLAYING_EARTH;
-        Game.stage = 0;
-        newGame();
+        newGame(0);
     }
     public void Button2Pressed(){
 
         gameState = GameState.PLAYING_EARTH;
-        Game.stage = 1;
-        newGame();
+        newGame(1);
     }
     public void Button3Pressed(){
 
         gameState = GameState.PLAYING_EARTH;
-        Game.stage = 2;
-        newGame();
+        newGame(2);
     }
     public void Button4Pressed(){
 
         gameState = GameState.PLAYING_EARTH;
-        Game.stage = 3;
-        newGame();
+        newGame(3);
     }
     public void Button5Pressed(){
 
         gameState = GameState.PLAYING_EARTH;
-        Game.stage = 4;
-        newGame();
+        newGame(4);
     }
     // The actual game
     private Game game;
@@ -279,7 +274,7 @@ public class Framework extends Canvas {
                     if(PlayerRocket.paused == false) {
                         gameTime += System.nanoTime() - lastTime;
 
-                        game.UpdateGame(gameTime, mousePosition());
+                        game.UpdateGame(gameTime, mousePosition(), pauseTime);
 
                         lastTime = System.nanoTime();
 
@@ -287,7 +282,7 @@ public class Framework extends Canvas {
                     else{
                         pauseTime += System.nanoTime() - lastTime;
 
-                        game.UpdateGame(gameTime, mousePosition());
+                        game.UpdateGame(gameTime, mousePosition(), pauseTime);
 
 
                         lastTime = System.nanoTime();
@@ -436,13 +431,13 @@ public class Framework extends Canvas {
     /**
      * Starts new game.
      */
-    public void newGame()
+    public void newGame(int stage)
     {
         // We set gameTime to zero and lastTime to current time for later calculations.
         gameTime = 0;
         lastTime = System.nanoTime();
         pauseTime = 0;
-        game = new Game(1);
+        game = new Game(stage);
     }
     
     /**

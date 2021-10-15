@@ -46,6 +46,7 @@ public class ScoreView extends JFrame implements placePanel {
 
         column.addElement("날짜");
         column.addElement("점수");
+        column.addElement("스테이지");
 
         model = new DefaultTableModel(column, 0) {
             @Override
