@@ -358,6 +358,8 @@ public class Framework extends Canvas {
         switch (gameState)
         {
             case PLAYING_MOON:
+            case PLAYING_EARTH:
+            case PLAYING_SPACE:
                 btn1.setVisible(false);
                 btn2.setVisible(false);
                 btn3.setVisible(false);
@@ -369,29 +371,7 @@ public class Framework extends Canvas {
                     game.DrawPause(g2d, getMousePosition());
                 }
                 break;
-            case PLAYING_EARTH:
-                btn1.setVisible(false);
-                btn2.setVisible(false);
-                btn3.setVisible(false);
-                btn4.setVisible(false);
-                btn5.setVisible(false);
-                game.DrawEarth(g2d, mousePosition());
-                placeMyPage(false);
-                if(PlayerRocket.paused) {
-                    game.DrawPause(g2d, getMousePosition());
-                }
-                break;
-            case PLAYING_SPACE:
-                btn1.setVisible(false);
-                btn2.setVisible(false);
-                btn3.setVisible(false);
-                btn4.setVisible(false);
-                btn5.setVisible(false);
-                game.DrawSpace(g2d, mousePosition());
-                if(PlayerRocket.paused) {
-                    game.DrawPause(g2d, getMousePosition());
-                }
-                break;
+
             case GAMEOVER:
                 btn1.setVisible(false);
                 btn2.setVisible(false);

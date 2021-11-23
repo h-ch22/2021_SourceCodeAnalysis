@@ -149,15 +149,13 @@ public class Game extends ScoreManagement {
         playerRocket.Update();
         landingArea.Update();
         fuel.Update();
+        fuel.crashCheck(playerRocket);
         if(fuel.isFuelEmpty){
             playerRocket.crashed = true;
             Framework.gameState = Framework.GameState.GAMEOVER;
         }
-        if(playerRocket.x + playerRocket.rocketImgWidth > fuel.fuelX &&playerRocket.x < fuel.fuelX + fuel.fuelImgWidth
-                && playerRocket.y + playerRocket.rocketImgHeight > fuel.fuelY && playerRocket.y < fuel.fuelY + +fuel.fuelImgHeight){
-            fuel.refueling();
-            fuel.relocationFuel();
-        }
+
+
         controlHelper.updateCoordinates(playerRocket.x, playerRocket.y);
         // Checks where the player rocket is. Is it still in the space or is it landed or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing area.
@@ -181,13 +179,14 @@ public class Game extends ScoreManagement {
 
             bumperManager.checkCollision(playerRocket.x, playerRocket.y);
         }
+        changeBackground();
+    }
+    private void changeBackground(){
         if(Framework.gameState==Framework.GameState.PLAYING_EARTH) {
             if(playerRocket.y<-70) {
                 playerRocket.y=(int)(Framework.frameHeight * 0.9);
                 Framework.gameState = Framework.GameState.PLAYING_SPACE;
-
             }
-
         }
         if(Framework.gameState==Framework.GameState.PLAYING_SPACE) {
             if(playerRocket.y<-70) {
@@ -195,7 +194,6 @@ public class Game extends ScoreManagement {
                 playerRocket.y=0;
                 playerRocket.speedY=0;
             }
-
         }
     }
     
@@ -207,32 +205,21 @@ public class Game extends ScoreManagement {
      */
     public void Draw(Graphics2D g2d, Point mousePosition)
     {
-        g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
-        
-        landingArea.Draw(g2d);
-        
+        if(Framework.gameState == Framework.GameState.PLAYING_MOON || Framework.gameState == Framework.GameState.GAMEOVER){
+            g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
+            landingArea.Draw(g2d);
+            bumperManager.Draw(g2d);
+        }
+        else if(Framework.gameState == Framework.GameState.PLAYING_EARTH) {
+            g2d.drawImage(backgroundEarthImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
+        }
+        else if(Framework.gameState == Framework.GameState.PLAYING_SPACE) {
+            g2d.drawImage(backgroundSpaceImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
+        }
         playerRocket.Draw(g2d);
-
-        bumperManager.Draw(g2d);
-
         fuel.Draw(g2d);
     }
-    public void DrawEarth(Graphics2D g2d, Point mousePosition)
-    {
-        g2d.drawImage(backgroundEarthImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
 
-        playerRocket.Draw(g2d);
-
-        fuel.Draw(g2d);
-    }
-    public void DrawSpace(Graphics2D g2d, Point mousePosition)
-    {
-        g2d.drawImage(backgroundSpaceImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
-
-        playerRocket.Draw(g2d);
-
-        fuel.Draw(g2d);
-    }
     public void DrawPause(Graphics2D g2d, Point mousePosition)
     {
         g2d.drawString("PAUSE", Framework.frameWidth / 2 - 10, Framework.frameHeight / 2);

@@ -75,7 +75,7 @@ public class Fuel {
             consumeFuel = 0;
         }
 
-        crashCheck();
+
     }
 
     public void refueling(){
@@ -89,8 +89,8 @@ public class Fuel {
         relocationFuel();
     }
 
-    public void crashCheck(){
-        if(rocketX + rocketWidth > fuelX && rocketX < fuelX + fuelImgWidth && rocketY + rocketHeight > fuelY && rocketY < fuelY + fuelImgHeight){
+    public void crashCheck(PlayerRocket playerRocket){
+        if(playerRocket.x + playerRocket.rocketImgWidth > fuelX && playerRocket.x < fuelX + fuelImgWidth && playerRocket.y + playerRocket.rocketImgHeight > fuelY && playerRocket.y < fuelY + fuelImgHeight){
             refueling();
             relocationFuel();
         }
