@@ -5,23 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1a9aadb-1d81-4b36-bdb0-a92c8547b5c4" name="Changes" comment="SignUp/SignIn is now available.">
+      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/2021_SourceCodeAnalysis.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/moon_lander/Fuel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/resources/images/fuel.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/.firebaserc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/firebase.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/firestore.indexes.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/firestore.rules" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions/ScoreManagement.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Score/Helper/ScoreManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Score/Helper/ScoreManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Score/View/ScoreView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Score/View/ScoreView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/BumperManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/BumperManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,16 +117,17 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/moon_lander" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/resources/images" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="two.files.diff.last.used.file" value="$USER_HOME$/Downloads/2021_SourceCodeAnalysis-Kim-s-Branches 3/src/main/moon_lander/LandingArea.java" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\SCA_2\2021_SourceCodeAnalysis\src\resources\images" />
       <recent name="$PROJECT_DIR$/src/main/moon_lander" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -171,14 +165,12 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--scan" />
+        <option name="scriptParameters" value="runMain" />
         <option name="taskDescriptions">
           <list />
         </option>
         <option name="taskNames">
-          <list>
-            <option value="runMain" />
-          </list>
+          <list />
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
@@ -187,6 +179,10 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Gradle.MoonLader [build]" />
+      <item itemvalue="Gradle.MoonLader [runMain]" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.MoonLader [runMain]" />
@@ -265,6 +261,10 @@
       <workItem from="1634297916762" duration="1429000" />
       <workItem from="1634302008779" duration="847000" />
       <workItem from="1634307184156" duration="276000" />
+      <workItem from="1637568326717" duration="610000" />
+      <workItem from="1637571045061" duration="312000" />
+      <workItem from="1637571408099" duration="430000" />
+      <workItem from="1637650939360" duration="1227000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp/SignIn is now available.">
       <created>1632372256959</created>

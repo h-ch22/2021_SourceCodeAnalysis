@@ -53,6 +53,7 @@ public class Game extends ScoreManagement {
 
     private String[] mapdata;
     private BumperManager bumperManager;
+    private Fuel fuel;
 
     public Game(int stage)
     {
@@ -95,6 +96,7 @@ public class Game extends ScoreManagement {
         playerRocket = new PlayerRocket(gravity);
         landingArea  = new LandingArea(landingAreaSpeed);
         bumperManager = new BumperManager(stage);
+        fuel = new Fuel();
     }
 
     private void GetFile() throws IOException {
@@ -137,6 +139,7 @@ public class Game extends ScoreManagement {
     {
         playerRocket.ResetPlayer();
         landingArea.ResetArea();
+        fuel.ResetFuel();
         controlHelper.updateGameStatus(Framework.GameState.PLAYING_EARTH);
     }
 
@@ -145,6 +148,16 @@ public class Game extends ScoreManagement {
         // Move the rocket
         playerRocket.Update();
         landingArea.Update();
+        fuel.Update();
+        if(fuel.isFuelEmpty){
+            playerRocket.crashed = true;
+            Framework.gameState = Framework.GameState.GAMEOVER;
+        }
+        if(playerRocket.x + playerRocket.rocketImgWidth > fuel.fuelX &&playerRocket.x < fuel.fuelX + fuel.fuelImgWidth
+                && playerRocket.y + playerRocket.rocketImgHeight > fuel.fuelY && playerRocket.y < fuel.fuelY + +fuel.fuelImgHeight){
+            fuel.refueling();
+            fuel.relocationFuel();
+        }
         controlHelper.updateCoordinates(playerRocket.x, playerRocket.y);
         // Checks where the player rocket is. Is it still in the space or is it landed or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing area.
@@ -201,18 +214,24 @@ public class Game extends ScoreManagement {
         playerRocket.Draw(g2d);
 
         bumperManager.Draw(g2d);
+
+        fuel.Draw(g2d);
     }
     public void DrawEarth(Graphics2D g2d, Point mousePosition)
     {
         g2d.drawImage(backgroundEarthImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
 
         playerRocket.Draw(g2d);
+
+        fuel.Draw(g2d);
     }
     public void DrawSpace(Graphics2D g2d, Point mousePosition)
     {
         g2d.drawImage(backgroundSpaceImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
 
         playerRocket.Draw(g2d);
+
+        fuel.Draw(g2d);
     }
     public void DrawPause(Graphics2D g2d, Point mousePosition)
     {
