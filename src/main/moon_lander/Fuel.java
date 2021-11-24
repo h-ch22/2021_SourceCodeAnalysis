@@ -19,14 +19,6 @@ public class Fuel {
 
     private PlayerRocket playerRocket;
 
-    private int rocketX = playerRocket.x;
-
-    private int rocketY = playerRocket.y;
-
-    private int rocketWidth = playerRocket.rocketImgWidth;
-
-    private int rocketHeight = playerRocket.rocketImgHeight;
-
     private int remainingFuel = 100;
 
     public boolean isFuelEmpty;
@@ -66,13 +58,19 @@ public class Fuel {
         }
     }
 
-    public void Update(){
+    public void Update(PlayerRocket playerRocket){
 
         remainingFuel -= consumeFuel;
 
         if(remainingFuel <= 0){
             isFuelEmpty = true;
             consumeFuel = 0;
+        }
+        if(playerRocket.paused){
+            consumeFuel = 0;
+        }
+        else{
+            consumeFuel = 1;
         }
 
 

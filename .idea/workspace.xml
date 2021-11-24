@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f1a9aadb-1d81-4b36-bdb0-a92c8547b5c4" name="Changes" comment="SignUp/SignIn is now available.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Fuel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Fuel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Game.java" afterDir="false" />
     </list>
@@ -258,7 +257,9 @@
       <workItem from="1637568326717" duration="610000" />
       <workItem from="1637571045061" duration="312000" />
       <workItem from="1637571408099" duration="430000" />
-      <workItem from="1637650939360" duration="3052000" />
+      <workItem from="1637650939360" duration="3297000" />
+      <workItem from="1637743218946" duration="1165000" />
+      <workItem from="1637757392541" duration="3341000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp/SignIn is now available.">
       <created>1632372256959</created>
