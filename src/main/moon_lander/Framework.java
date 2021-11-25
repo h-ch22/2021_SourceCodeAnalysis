@@ -59,7 +59,7 @@ public class Framework extends Canvas {
     /**
      * Possible states of the game
      */
-    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING_MOON, PLAYING_EARTH, PLAYING_SPACE, GAMEOVER, DESTROYED, PAUSED}
+    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING_MOON, PLAYING_EARTH, PLAYING_SPACE, GAMEOVER, DESTROYED}
     /**
      * Current state of the game
      */
@@ -271,7 +271,7 @@ public class Framework extends Canvas {
                 case PLAYING_MOON:
 
                 case PLAYING_SPACE:
-                    if(PlayerRocket.paused == false) {
+                    if(!PlayerRocket.paused) {
                         gameTime += System.nanoTime() - lastTime;
 
                         game.UpdateGame(gameTime, mousePosition(), pauseTime);
@@ -328,8 +328,6 @@ public class Framework extends Canvas {
                         lastVisualizingTime = System.nanoTime();
                     }
                 break;
-
-                case PAUSED:
 
             }
             
