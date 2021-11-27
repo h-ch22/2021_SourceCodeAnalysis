@@ -6,17 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f1a9aadb-1d81-4b36-bdb0-a92c8547b5c4" name="Changes" comment="SignUp/SignIn is now available.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/moon_lander/Canvas.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/moon_lander/Framework$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/moon_lander/Framework$GameState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/moon_lander/Framework.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/moon_lander/Game$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/moon_lander/Game.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/moon_lander/LandingArea.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/moon_lander/PlayerRocket.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/moon_lander/Window$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/moon_lander/Window.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,7 +261,9 @@
       <workItem from="1637650939360" duration="3297000" />
       <workItem from="1637743218946" duration="1165000" />
       <workItem from="1637757392541" duration="3341000" />
-      <workItem from="1637828200147" duration="1559000" />
+      <workItem from="1637828200147" duration="1892000" />
+      <workItem from="1637902365517" duration="196000" />
+      <workItem from="1637991192827" duration="881000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp/SignIn is now available.">
       <created>1632372256959</created>

@@ -62,7 +62,7 @@ public class Game extends ScoreManagement {
         super();
 
         this.stage = stage;
-
+        background = "Earth";
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
         
         Thread threadForInitGame = new Thread() {
@@ -73,7 +73,7 @@ public class Game extends ScoreManagement {
                 // Load game files (images, sounds, ...)
                 LoadContent();
                 Music.playMusic("src/resources/musics/backgroundmusic.wav",true);
-                Framework.gameState = Framework.GameState.PLAYING_EARTH;
+                Framework.gameState = Framework.GameState.PLAYING;
                 controlHelper.updateGameStatus(Framework.gameState);
             }
         };
@@ -142,7 +142,8 @@ public class Game extends ScoreManagement {
         playerRocket.ResetPlayer();
         landingArea.ResetArea();
         fuel.ResetFuel();
-        controlHelper.updateGameStatus(Framework.GameState.PLAYING_EARTH);
+        controlHelper.updateGameStatus(Framework.GameState.PLAYING);
+        background = "Earth";
     }
 
     public void UpdateGame(long gameTime, Point mousePosition, long pauseTime)
@@ -160,7 +161,7 @@ public class Game extends ScoreManagement {
         controlHelper.updateCoordinates(playerRocket.x, playerRocket.y);
         // Checks where the player rocket is. Is it still in the space or is it landed or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing area.
-        if (Framework.gameState == Framework.GameState.PLAYING_MOON) {
+        if (background == "Moon") {
             if (playerRocket.y + playerRocket.rocketImgHeight - 10 > landingArea.y) {
                 // Here we check if the rocket is over landing area.
                 if ((playerRocket.x > landingArea.x) && (playerRocket.x < landingArea.x + landingArea.landingAreaImgWidth - playerRocket.rocketImgWidth)) {
@@ -177,26 +178,23 @@ public class Game extends ScoreManagement {
                 Framework.gameState = Framework.GameState.GAMEOVER;
                 controlHelper.updateGameStatus(Framework.gameState);
             }
-            background = "Moon";
             bumperManager.checkCollision(playerRocket.x, playerRocket.y);
         }
         changeBackground();
     }
     private void changeBackground(){
-        if(Framework.gameState==Framework.GameState.PLAYING_EARTH) {
+        if(background == "Earth") {
             if(playerRocket.y<-70) {
                 playerRocket.y=(int)(Framework.frameHeight * 0.9);
-                Framework.gameState = Framework.GameState.PLAYING_SPACE;
+                background = "Space";
             }
-            background = "Earth";
         }
-        if(Framework.gameState==Framework.GameState.PLAYING_SPACE) {
+        if(background == "Space") {
             if(playerRocket.y<-70) {
-                Framework.gameState = Framework.GameState.PLAYING_MOON;
+                background = "Moon";
                 playerRocket.y=0;
                 playerRocket.speedY=0;
             }
-            background = "Space";
         }
     }
     

@@ -59,7 +59,7 @@ public class Framework extends Canvas {
     /**
      * Possible states of the game
      */
-    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING_MOON, PLAYING_EARTH, PLAYING_SPACE, GAMEOVER, DESTROYED}
+    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING, GAMEOVER, DESTROYED}
     /**
      * Current state of the game
      */
@@ -176,27 +176,27 @@ public class Framework extends Canvas {
 
     public void Button1Pressed(){
 
-        gameState = GameState.PLAYING_EARTH;
+        gameState = GameState.PLAYING;
         newGame(0);
     }
     public void Button2Pressed(){
 
-        gameState = GameState.PLAYING_EARTH;
+        gameState = GameState.PLAYING;
         newGame(1);
     }
     public void Button3Pressed(){
 
-        gameState = GameState.PLAYING_EARTH;
+        gameState = GameState.PLAYING;
         newGame(2);
     }
     public void Button4Pressed(){
 
-        gameState = GameState.PLAYING_EARTH;
+        gameState = GameState.PLAYING;
         newGame(3);
     }
     public void Button5Pressed(){
 
-        gameState = GameState.PLAYING_EARTH;
+        gameState = GameState.PLAYING;
         newGame(4);
     }
     // The actual game
@@ -266,24 +266,18 @@ public class Framework extends Canvas {
 
             switch (gameState)
             {
-                case PLAYING_EARTH:
-
-                case PLAYING_MOON:
-
-                case PLAYING_SPACE:
+                case PLAYING:
                     if(!PlayerRocket.paused) {
                         gameTime += System.nanoTime() - lastTime;
 
                         game.UpdateGame(gameTime, mousePosition(), pauseTime);
 
                         lastTime = System.nanoTime();
-
                     }
                     else{
                         pauseTime += System.nanoTime() - lastTime;
 
                         game.UpdateGame(gameTime, mousePosition(), pauseTime);
-
 
                         lastTime = System.nanoTime();
                     }
@@ -355,9 +349,7 @@ public class Framework extends Canvas {
     {
         switch (gameState)
         {
-            case PLAYING_MOON:
-            case PLAYING_EARTH:
-            case PLAYING_SPACE:
+            case PLAYING:
                 btn1.setVisible(false);
                 btn2.setVisible(false);
                 btn3.setVisible(false);

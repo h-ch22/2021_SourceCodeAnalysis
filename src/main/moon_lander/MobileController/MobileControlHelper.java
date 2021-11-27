@@ -25,9 +25,7 @@ public class MobileControlHelper extends UserManagement  {
 
     public void updateGameStatus(Framework.GameState state){
         switch(state){
-            case PLAYING_EARTH:
-            case PLAYING_MOON:
-            case PLAYING_SPACE:
+            case PLAYING:
                 gameStatus = "PLAYING";
                 break;
 
