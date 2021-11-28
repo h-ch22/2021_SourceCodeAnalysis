@@ -267,7 +267,7 @@ public class Framework extends Canvas {
             switch (gameState)
             {
                 case PLAYING:
-                    if(!PlayerRocket.paused) {
+                    if(!GameManager.isPaused) {
                         gameTime += System.nanoTime() - lastTime;
 
                         game.UpdateGame(gameTime, mousePosition(), pauseTime);
@@ -357,7 +357,7 @@ public class Framework extends Canvas {
                 btn5.setVisible(false);
                 game.Draw(g2d, mousePosition());
                 placeMyPage(false);
-                if(PlayerRocket.paused) {
+                if(GameManager.isPaused) {
                     game.DrawPause(g2d, getMousePosition());
                 }
                 break;

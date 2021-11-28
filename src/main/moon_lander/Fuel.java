@@ -58,7 +58,7 @@ public class Fuel {
         }
     }
 
-    public void Update(PlayerRocket playerRocket){
+    public void Update(){
 
         remainingFuel -= consumeFuel;
 
@@ -66,7 +66,7 @@ public class Fuel {
             isFuelEmpty = true;
             consumeFuel = 0;
         }
-        if(playerRocket.paused){
+        if(GameManager.isPaused){
             consumeFuel = 0;
         }
         else{

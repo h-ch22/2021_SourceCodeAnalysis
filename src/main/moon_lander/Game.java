@@ -37,6 +37,7 @@ public class Game extends ScoreManagement {
     /**
      * Game background image.
      */
+    private GameManager gameManager;
     private BufferedImage backgroundImg;
 
     private BufferedImage backgroundEarthImg;
@@ -50,9 +51,8 @@ public class Game extends ScoreManagement {
     private MobileControlHelper controlHelper = new MobileControlHelper();
 
     private int stage;
-
-    private String background;
-
+    public static enum Background{EARTH, SPACE, MOON}
+    public static Background background;
     private String[] mapdata;
     private BumperManager bumperManager;
     private Fuel fuel;
@@ -62,7 +62,7 @@ public class Game extends ScoreManagement {
         super();
 
         this.stage = stage;
-        background = "Earth";
+        background = Background.EARTH;
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
         
         Thread threadForInitGame = new Thread() {
@@ -72,7 +72,7 @@ public class Game extends ScoreManagement {
                 Initialize();
                 // Load game files (images, sounds, ...)
                 LoadContent();
-                Music.playMusic("src/resources/musics/backgroundmusic.wav",true);
+                GameManager.playMusic("src/resources/musics/backgroundmusic.wav",true);
                 Framework.gameState = Framework.GameState.PLAYING;
                 controlHelper.updateGameStatus(Framework.gameState);
             }
@@ -98,6 +98,7 @@ public class Game extends ScoreManagement {
         playerRocket = new PlayerRocket(gravity);
         landingArea  = new LandingArea(landingAreaSpeed);
         bumperManager = new BumperManager(stage);
+        gameManager = new GameManager();
         fuel = new Fuel();
     }
 
@@ -141,9 +142,10 @@ public class Game extends ScoreManagement {
     {
         playerRocket.ResetPlayer();
         landingArea.ResetArea();
+        gameManager.ResetGameManager();
         fuel.ResetFuel();
         controlHelper.updateGameStatus(Framework.GameState.PLAYING);
-        background = "Earth";
+        background = Background.EARTH;
     }
 
     public void UpdateGame(long gameTime, Point mousePosition, long pauseTime)
@@ -151,7 +153,7 @@ public class Game extends ScoreManagement {
         // Move the rocket
         playerRocket.Update();
         landingArea.Update();
-        fuel.Update(playerRocket);
+        fuel.Update();
         fuel.crashCheck(playerRocket);
         if(fuel.isFuelEmpty){
             playerRocket.crashed = true;
@@ -161,7 +163,7 @@ public class Game extends ScoreManagement {
         controlHelper.updateCoordinates(playerRocket.x, playerRocket.y);
         // Checks where the player rocket is. Is it still in the space or is it landed or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing area.
-        if (background == "Moon") {
+        if (background == Background.MOON) {
             if (playerRocket.y + playerRocket.rocketImgHeight - 10 > landingArea.y) {
                 // Here we check if the rocket is over landing area.
                 if ((playerRocket.x > landingArea.x) && (playerRocket.x < landingArea.x + landingArea.landingAreaImgWidth - playerRocket.rocketImgWidth)) {
@@ -180,22 +182,7 @@ public class Game extends ScoreManagement {
             }
             bumperManager.checkCollision(playerRocket.x, playerRocket.y);
         }
-        changeBackground();
-    }
-    private void changeBackground(){
-        if(background == "Earth") {
-            if(playerRocket.y<-70) {
-                playerRocket.y=(int)(Framework.frameHeight * 0.9);
-                background = "Space";
-            }
-        }
-        if(background == "Space") {
-            if(playerRocket.y<-70) {
-                background = "Moon";
-                playerRocket.y=0;
-                playerRocket.speedY=0;
-            }
-        }
+        gameManager.changeBackground(playerRocket);
     }
     
     /**
@@ -206,15 +193,15 @@ public class Game extends ScoreManagement {
      */
     public void Draw(Graphics2D g2d, Point mousePosition)
     {
-        if(background == "Moon"){
+        if(background == Background.MOON){
             g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
             landingArea.Draw(g2d);
             bumperManager.Draw(g2d);
         }
-        else if(background == "Earth") {
+        else if(background == Background.EARTH) {
             g2d.drawImage(backgroundEarthImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
         }
-        else if(background == "Space") {
+        else if(background == Background.SPACE) {
             g2d.drawImage(backgroundSpaceImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
         }
         playerRocket.Draw(g2d);

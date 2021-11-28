@@ -43,7 +43,7 @@ public class PlayerRocket extends MobileControlHelper {
      * Has rocket crashed?
      */
     public boolean crashed;
-    public static boolean paused;
+
     /**
      * Accelerating speed of the rocket.
      */
@@ -51,7 +51,7 @@ public class PlayerRocket extends MobileControlHelper {
     /**
      * Stopping/Falling speed of the rocket. Falling speed because, the gravity pulls the rocket down to the moon.
      */
-    private int speedStopping;
+    private static int speedStopping;
     
     /**
      * Maximum speed that rocket can have without having a crash when landing.
@@ -67,9 +67,6 @@ public class PlayerRocket extends MobileControlHelper {
      */
     public static int speedY;
 
-    private int speedXPaused;
-
-    public int speedYPaused;
     /**
      * Image of the rocket in air.
      */
@@ -151,14 +148,12 @@ public class PlayerRocket extends MobileControlHelper {
     {
         landed = false;
         crashed = false;
-        paused = false;
         x = random.nextInt(Framework.frameWidth - rocketImgWidth);
         y = 10;
         
         speedX = 0;
         speedY = 0;
-        speedXPaused = 0;
-        speedYPaused = 0;
+
     }
     
     
@@ -169,7 +164,7 @@ public class PlayerRocket extends MobileControlHelper {
     {
         getUserControl();
         // Calculating speed for moving up or down.
-        if(!paused) {
+        if(!GameManager.isPaused) {
             if (Canvas.keyboardKeyState(KeyEvent.VK_W))
                 speedY -= speedAccelerating;
             else
@@ -187,16 +182,14 @@ public class PlayerRocket extends MobileControlHelper {
             else if (speedX > 0)
                 speedX -= speedStopping;
             if (Canvas.keyboardKeyState(KeyEvent.VK_P)) {
-                paused = true;
-                Pause();
-
+                GameManager.isPaused = true;
+                GameManager.pause(speedX, speedY);
             }
         }
         else {
                 if(Canvas.keyboardKeyState(KeyEvent.VK_R)) {
-                    paused = false;
-                    Resume();
-
+                    GameManager.isPaused = false;
+                    GameManager.resume();
                 }
             }
 
@@ -206,22 +199,12 @@ public class PlayerRocket extends MobileControlHelper {
         x += speedX;
         y += speedY;
         }
-
-
-    public void Pause() {
-        speedXPaused = speedX;
-        speedYPaused = speedY;
-        speedX = 0;
-        speedY = 0;
-        speedStopping = 0;
-
+    public static void setSpeed(int i, int j, int k){
+        speedX = i;
+        speedY = j;
+        speedStopping = k;
     }
-    public void Resume() {
 
-        speedX = speedXPaused;
-        speedY = speedYPaused;
-        speedStopping = 1;
-    }
     public void Draw(Graphics2D g2d)
     {
         g2d.setColor(Color.white);

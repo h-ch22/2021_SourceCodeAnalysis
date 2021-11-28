@@ -5,10 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1a9aadb-1d81-4b36-bdb0-a92c8547b5c4" name="Changes" comment="SignUp/SignIn is now available.">
+      <change afterPath="$PROJECT_DIR$/src/main/moon_lander/GameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/2021_SourceCodeAnalysis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/2021_SourceCodeAnalysis.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Fuel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Fuel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Music.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,10 +117,10 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/resources/images" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Language Defaults" />
     <property name="two.files.diff.last.used.file" value="$USER_HOME$/Downloads/2021_SourceCodeAnalysis-Kim-s-Branches 3/src/main/moon_lander/LandingArea.java" />
   </component>
   <component name="RecentsManager">
@@ -264,6 +268,8 @@
       <workItem from="1637828200147" duration="1892000" />
       <workItem from="1637902365517" duration="196000" />
       <workItem from="1637991192827" duration="881000" />
+      <workItem from="1638014558159" duration="1925000" />
+      <workItem from="1638068304505" duration="8146000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp/SignIn is now available.">
       <created>1632372256959</created>
