@@ -154,7 +154,7 @@ public class Game extends ScoreManagement {
         playerRocket.Update();
         landingArea.Update();
         fuel.Update();
-        fuel.crashCheck(playerRocket);
+        fuel.crashCheck();
         if(fuel.isFuelEmpty){
             playerRocket.crashed = true;
             Framework.gameState = Framework.GameState.GAMEOVER;
@@ -193,16 +193,18 @@ public class Game extends ScoreManagement {
      */
     public void Draw(Graphics2D g2d, Point mousePosition)
     {
-        if(background == Background.MOON){
-            g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
-            landingArea.Draw(g2d);
-            bumperManager.Draw(g2d);
-        }
-        else if(background == Background.EARTH) {
-            g2d.drawImage(backgroundEarthImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
-        }
-        else if(background == Background.SPACE) {
-            g2d.drawImage(backgroundSpaceImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
+        switch(background){
+            case MOON:
+                g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
+                landingArea.Draw(g2d);
+                bumperManager.Draw(g2d);
+                break;
+            case EARTH:
+                g2d.drawImage(backgroundEarthImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
+                break;
+            case SPACE:
+                g2d.drawImage(backgroundSpaceImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
+                break;
         }
         playerRocket.Draw(g2d);
         fuel.Draw(g2d);

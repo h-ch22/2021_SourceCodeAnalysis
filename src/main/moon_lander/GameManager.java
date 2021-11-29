@@ -34,13 +34,15 @@ public class GameManager {
             if(playerRocket.y<-70) {
                 playerRocket.setRocketY((int)(Framework.frameHeight * 0.9));
                 Game.background = Game.Background.SPACE;
+                Fuel.relocationFuel();
             }
         }
         if(Game.background == Game.Background.SPACE) {
             if(playerRocket.y<-70) {
-                Game.background = Game.Background.MOON;
                 playerRocket.setRocketY(0);
                 playerRocket.setSpeedY(0);
+                Game.background = Game.Background.MOON;
+                Fuel.relocationFuel();
             }
         }
     }

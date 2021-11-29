@@ -11,13 +11,11 @@ import java.util.logging.Logger;
 
 public class Fuel {
 
-    public int fuelX;
+    public static int fuelX;
 
-    public int fuelY;
+    public static int fuelY;
 
     private int consumeFuel;
-
-    private PlayerRocket playerRocket;
 
     private int remainingFuel = 100;
 
@@ -25,11 +23,11 @@ public class Fuel {
 
     private BufferedImage fuelImg;
 
-    public int fuelImgWidth;
+    public static int fuelImgWidth;
 
-    public int fuelImgHeight;
+    public static int fuelImgHeight;
 
-    private Random random;
+    private static Random random;
 
     public Fuel(){
         Initiallize();
@@ -64,7 +62,6 @@ public class Fuel {
 
         if(remainingFuel <= 0){
             isFuelEmpty = true;
-            consumeFuel = 0;
         }
         if(GameManager.isPaused){
             consumeFuel = 0;
@@ -72,12 +69,6 @@ public class Fuel {
         else{
             consumeFuel = 1;
         }
-
-
-    }
-
-    public void refueling(){
-        remainingFuel = 100;
     }
 
     public void ResetFuel(){
@@ -87,14 +78,15 @@ public class Fuel {
         relocationFuel();
     }
 
-    public void crashCheck(PlayerRocket playerRocket){
-        if(playerRocket.x + playerRocket.rocketImgWidth > fuelX && playerRocket.x < fuelX + fuelImgWidth && playerRocket.y + playerRocket.rocketImgHeight > fuelY && playerRocket.y < fuelY + fuelImgHeight){
-            refueling();
+    public void crashCheck(){
+        if(PlayerRocket.x + PlayerRocket.rocketImgWidth > fuelX && PlayerRocket.x < fuelX + fuelImgWidth
+                && PlayerRocket.y + PlayerRocket.rocketImgHeight > fuelY && PlayerRocket.y < fuelY + fuelImgHeight){
+            remainingFuel = 100;
             relocationFuel();
         }
     }
 
-    public void relocationFuel(){
+    public static void relocationFuel(){
 
         random = new Random();
 
@@ -106,7 +98,6 @@ public class Fuel {
     {
         g2d.setColor(Color.white);
         g2d.drawString("남은 연료량 : " + remainingFuel + " : " , 5, 30);
-
         g2d.drawImage(fuelImg, fuelX, fuelY, null);
 
     }
