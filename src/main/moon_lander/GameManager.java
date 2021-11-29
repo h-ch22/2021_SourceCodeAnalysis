@@ -32,15 +32,15 @@ public class GameManager {
     public void changeBackground(PlayerRocket playerRocket){
         if(Game.background == Game.Background.EARTH) {
             if(playerRocket.y<-70) {
-                playerRocket.y=(int)(Framework.frameHeight * 0.9);
+                playerRocket.setRocketY((int)(Framework.frameHeight * 0.9));
                 Game.background = Game.Background.SPACE;
             }
         }
         if(Game.background == Game.Background.SPACE) {
             if(playerRocket.y<-70) {
                 Game.background = Game.Background.MOON;
-                playerRocket.y=0;
-                playerRocket.speedY=0;
+                playerRocket.setRocketY(0);
+                playerRocket.setSpeedY(0);
             }
         }
     }

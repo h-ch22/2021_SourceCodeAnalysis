@@ -5,13 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1a9aadb-1d81-4b36-bdb0-a92c8547b5c4" name="Changes" comment="SignUp/SignIn is now available.">
-      <change afterPath="$PROJECT_DIR$/src/main/moon_lander/GameManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/2021_SourceCodeAnalysis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/2021_SourceCodeAnalysis.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Fuel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Fuel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Music.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/moon_lander/Framework$GameState.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/moon_lander/Framework$GameState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/moon_lander/Framework.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/moon_lander/Framework.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/moon_lander/Fuel.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/moon_lander/Fuel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/moon_lander/Game$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/moon_lander/Game$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/moon_lander/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/moon_lander/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/moon_lander/MobileController/MobileControlHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/moon_lander/MobileController/MobileControlHelper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/moon_lander/Music.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/main/moon_lander/PlayerRocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/main/moon_lander/PlayerRocket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/GameManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -269,7 +272,9 @@
       <workItem from="1637902365517" duration="196000" />
       <workItem from="1637991192827" duration="881000" />
       <workItem from="1638014558159" duration="1925000" />
-      <workItem from="1638068304505" duration="8146000" />
+      <workItem from="1638068304505" duration="8190000" />
+      <workItem from="1638077367989" duration="955000" />
+      <workItem from="1638150810998" duration="316000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp/SignIn is now available.">
       <created>1632372256959</created>

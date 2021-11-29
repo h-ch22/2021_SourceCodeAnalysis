@@ -205,6 +205,13 @@ public class PlayerRocket extends MobileControlHelper {
         speedStopping = k;
     }
 
+    public static void setRocketY(int i){
+        y = i;
+    }
+
+    public static void setSpeedY(int i){speedY = i;}
+
+
     public void Draw(Graphics2D g2d)
     {
         g2d.setColor(Color.white);
