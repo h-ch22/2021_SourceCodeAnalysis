@@ -24,10 +24,11 @@ public class ScoreManagement extends UserManagement {
     private final SimpleDateFormat format = new SimpleDateFormat("yy.MM.dd kk:mm:ss.SSSS");
 
     private BufferedImage ic_goldCup, ic_silverCup, ic_bronzeCup;
+    @Nullable
     private String score_1st, score_2nd, score_3rd;
     private Graphics2D g2d;
 
-    private Vector<Vector> scoreData = new Vector<>();
+    private final Vector<Vector> scoreData = new Vector<>();
     protected HashMap<String, Long> rankData = new HashMap<>();
 
     public ScoreManagement() {

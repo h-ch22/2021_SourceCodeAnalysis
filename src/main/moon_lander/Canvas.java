@@ -1,6 +1,7 @@
 package main.moon_lander;
 
 import main.moon_lander.Controller.CanvasViewController;
+import main.moon_lander.Home.Controller.HomeViewController;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -19,8 +20,8 @@ public abstract class Canvas extends JPanel implements KeyListener {
     
     // Keyboard states - Here are stored states for keyboard keys - is it down or not.
     private static boolean[] keyboardState = new boolean[525];
+    public JButton btn_myPage, btn_settings;
 
-    public JButton btn_myPage;
     public Window gameWindow;
 
     public Canvas(Window gameWindow) {
@@ -45,8 +46,6 @@ public abstract class Canvas extends JPanel implements KeyListener {
         URL iconURL = this.getClass().getClassLoader().getResource("ic_myPage.png");
         ImageIcon ic_myPage = new ImageIcon(iconURL);
 
-        System.out.println(iconURL);
-
         Image iconImg = ic_myPage.getImage();
         Image scaledIcon = iconImg.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         ic_myPage = new ImageIcon(scaledIcon);
@@ -57,19 +56,40 @@ public abstract class Canvas extends JPanel implements KeyListener {
         btn_myPage.setBounds(10, 10, 10, 10);
         btn_myPage.setSize(new Dimension(50, 50));
 
+        URL settingsIconURL = this.getClass().getClassLoader().getResource("ic_settings.png");
+        ImageIcon ic_settings = new ImageIcon(settingsIconURL);
+
+        Image settingsImg = ic_settings.getImage();
+        Image settingsScaledIcon = settingsImg.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        ic_settings = new ImageIcon(settingsScaledIcon);
+
+        btn_settings = new JButton(ic_settings);
+        btn_settings.setBorderPainted(false);
+        btn_settings.setContentAreaFilled(false);
+        btn_settings.setBounds(700, 10, 10, 10);
+        btn_settings.setSize(new Dimension(50, 50));
+
+        btn_myPage.setName("btn_myPage");
+        btn_settings.setName("btn_settings");
+
         new CanvasViewController(this);
     }
 
-    public void placeMyPage(boolean show){
+    public void placeUserInteractionButtons(boolean show){
         if(show){
             btn_myPage.setVisible(true);
+            btn_settings.setVisible(true);
 
             this.add(btn_myPage);
+            this.add(btn_settings);
         }
 
         else{
             btn_myPage.setVisible(false);
+            btn_settings.setVisible(false);
+
             this.remove(btn_myPage);
+            this.remove(btn_settings);
         }
     }
     

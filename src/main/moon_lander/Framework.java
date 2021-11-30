@@ -1,14 +1,12 @@
 package main.moon_lander;
 
 import Score.Helper.ScoreManagement;
+import UserManagement.Helper.UserManagement;
+import main.moon_lander.Home.Controller.HomeViewController;
 import main.moon_lander.MobileController.MobileControlHelper;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -59,7 +57,7 @@ public class Framework extends Canvas {
     /**
      * Possible states of the game
      */
-    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING_MOON, PLAYING_EARTH, PLAYING_SPACE, GAMEOVER, DESTROYED, PAUSED}
+    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING, GAMEOVER, DESTROYED}
     /**
      * Current state of the game
      */
@@ -74,146 +72,34 @@ public class Framework extends Canvas {
 
     private long pauseTime;
 
-    private final JButton btn1 = new JButton("stage 1");
-    private final JButton btn2 = new JButton("stage 2");
-    private final JButton btn3 = new JButton("stage 3");
-    private final JButton btn4 = new JButton("stage 4");
-    private final JButton btn5 = new JButton("stage 5");
+    public final JButton[] buttons = {
+            new JButton("stage 1"),
+            new JButton("stage 2"),
+            new JButton("stage 3"),
+            new JButton("stage 4"),
+            new JButton("stage 5")
+    };
 
-    public void setButton() {
-        btn1.setBounds(50, 500, 100, 50);
-        btn2.setBounds(200, 500, 100, 50);
-        btn3.setBounds(350, 500, 100, 50);
-        btn4.setBounds(500, 500, 100, 50);
-        btn5.setBounds(650, 500, 100, 50);
-
-        btn1.setVisible(false);
-        btn2.setVisible(false);
-        btn3.setVisible(false);
-        btn4.setVisible(false);
-        btn5.setVisible(false);
-
-        btn1.addMouseListener(new MouseAdapter() {
-
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Button1Pressed();
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        btn2.addMouseListener(new MouseAdapter() {
-
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Button2Pressed();
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        btn3.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Button3Pressed();
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        btn4.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Button4Pressed();
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        btn5.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Button5Pressed();
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-
-        add(btn1);
-        add(btn2);
-        add(btn3);
-        add(btn4);
-        add(btn5);
-    }
-
-    public void Button1Pressed(){
-
-        gameState = GameState.PLAYING_EARTH;
-        newGame(0);
-    }
-    public void Button2Pressed(){
-
-        gameState = GameState.PLAYING_EARTH;
-        newGame(1);
-    }
-    public void Button3Pressed(){
-
-        gameState = GameState.PLAYING_EARTH;
-        newGame(2);
-    }
-    public void Button4Pressed(){
-
-        gameState = GameState.PLAYING_EARTH;
-        newGame(3);
-    }
-    public void Button5Pressed(){
-
-        gameState = GameState.PLAYING_EARTH;
-        newGame(4);
-    }
     // The actual game
     private Game game;
     private ScoreManagement scoreHelper = new ScoreManagement();
     private MobileControlHelper controlHelper = new MobileControlHelper();
+    private UserManagement settings = new UserManagement();
+    public static String useStoryMode = "true";
     /**
      * Image for menu.
      */
     private BufferedImage moonLanderMenuImg;
-    
-    
+    private final HomeViewController controller = new HomeViewController(this);
+
+
     public Framework (Window gameWindow) {
         super(gameWindow);
 
+        setUserPrefs();
+
         gameState = GameState.VISUALIZING;
-        
+
         //We start game in new thread.
         Thread gameThread = new Thread() {
             @Override
@@ -222,8 +108,50 @@ public class Framework extends Canvas {
             }
         };
         gameThread.start();
+
     }
-    
+
+    public void setButton() {
+        btn_myPage.setBorderPainted(false);
+        btn_myPage.setContentAreaFilled(false);
+        btn_myPage.setBounds(10, 10, 10, 10);
+        btn_myPage.setSize(new Dimension(50, 50));
+        btn_myPage.setName("btn_myPage");
+
+        for(int i = 0; i < buttons.length; i++){
+            switch(i){
+                case 0:
+                    buttons[i].setBounds(50, 500, 100, 50);
+
+                case 1:
+                    buttons[i].setBounds(200, 500, 100, 50);
+
+                case 2:
+                    buttons[i].setBounds(350, 500, 100, 50);
+
+                case 3:
+                    buttons[i].setBounds(500, 500, 100, 50);
+
+                case 4:
+                    buttons[i].setBounds(650, 500, 100, 50);
+            }
+
+            add(buttons[i]);
+            buttons[i].setVisible(true);
+            buttons[i].addActionListener(controller);
+            buttons[i].setName("btn_stage_"+i);
+        }
+    }
+
+    public void startGAME(int stage){
+        for(JButton btn : buttons){
+            btn.setVisible(false);
+        }
+
+        setUserPrefs();
+
+        newGame(stage);
+    }
     
    /**
      * Set variables and objects.
@@ -266,28 +194,24 @@ public class Framework extends Canvas {
 
             switch (gameState)
             {
-                case PLAYING_EARTH:
-
-                case PLAYING_MOON:
-
-                case PLAYING_SPACE:
-                    if(PlayerRocket.paused == false) {
+                case PLAYING:
+                    if(!GameManager.isPaused) {
                         gameTime += System.nanoTime() - lastTime;
 
                         game.UpdateGame(gameTime, mousePosition(), pauseTime);
 
                         lastTime = System.nanoTime();
-
                     }
+
                     else{
                         pauseTime += System.nanoTime() - lastTime;
 
                         game.UpdateGame(gameTime, mousePosition(), pauseTime);
 
-
                         lastTime = System.nanoTime();
                     }
                 break;
+
                 case GAMEOVER:
                 case MAIN_MENU:
                     controlHelper.receiveGameSTART(this);
@@ -329,8 +253,6 @@ public class Framework extends Canvas {
                     }
                 break;
 
-                case PAUSED:
-
             }
             
             // Repaint the screen.
@@ -357,63 +279,31 @@ public class Framework extends Canvas {
     {
         switch (gameState)
         {
-            case PLAYING_MOON:
-                btn1.setVisible(false);
-                btn2.setVisible(false);
-                btn3.setVisible(false);
-                btn4.setVisible(false);
-                btn5.setVisible(false);
+            case PLAYING:
                 game.Draw(g2d, mousePosition());
-                placeMyPage(false);
-                if(PlayerRocket.paused) {
+                placeUserInteractionButtons(false);
+                if(GameManager.isPaused) {
                     game.DrawPause(g2d, getMousePosition());
                 }
+
                 break;
-            case PLAYING_EARTH:
-                btn1.setVisible(false);
-                btn2.setVisible(false);
-                btn3.setVisible(false);
-                btn4.setVisible(false);
-                btn5.setVisible(false);
-                game.DrawEarth(g2d, mousePosition());
-                placeMyPage(false);
-                if(PlayerRocket.paused) {
-                    game.DrawPause(g2d, getMousePosition());
-                }
-                break;
-            case PLAYING_SPACE:
-                btn1.setVisible(false);
-                btn2.setVisible(false);
-                btn3.setVisible(false);
-                btn4.setVisible(false);
-                btn5.setVisible(false);
-                game.DrawSpace(g2d, mousePosition());
-                if(PlayerRocket.paused) {
-                    game.DrawPause(g2d, getMousePosition());
-                }
-                break;
+
             case GAMEOVER:
-                btn1.setVisible(false);
-                btn2.setVisible(false);
-                btn3.setVisible(false);
-                btn4.setVisible(false);
-                btn5.setVisible(false);
                 game.DrawGameOver(g2d, mousePosition(), gameTime, pauseTime);
                 scoreHelper.getRank();
                 scoreHelper.drawRank(g2d);
-                placeMyPage(true);
+                placeUserInteractionButtons(true);
 
                 break;
             case MAIN_MENU:
                 g2d.drawImage(moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
                 g2d.setColor(Color.white);
-                btn1.setVisible(true);
-                btn2.setVisible(true);
-                btn3.setVisible(true);
-                btn4.setVisible(true);
-                btn5.setVisible(true);
 
-                placeMyPage(true);
+                for(JButton btn : buttons) {
+                    btn.setVisible(true);
+                }
+
+                placeUserInteractionButtons(true);
 
                 scoreHelper.getRank();
                 scoreHelper.drawRank(g2d);
@@ -496,6 +386,16 @@ public class Framework extends Canvas {
                 if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER)
                     restartGame();
             break;
+        }
+    }
+
+    public void setUserPrefs(){
+        if (settings.getUserPrefs().get("useStoryMode", "true").equals("true")){
+            useStoryMode = "true";
+        }
+
+        else{
+            useStoryMode = "false";
         }
     }
 }

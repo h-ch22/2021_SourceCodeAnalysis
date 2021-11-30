@@ -30,7 +30,9 @@ public class UserManagement extends AES256Util {
 
     protected static UserRecord userRecord = null;
     protected final Firestore db;
+
     protected Preferences signInPrefs = Preferences.userNodeForPackage(UserManagement.class);
+    protected Preferences settingsPrefs = Preferences.userNodeForPackage(UserManagement.class);
 
     public UserManagement() {
         firebaseKey = "AIzaSyBE6icm5bCka2H9g3eUUIA-NRz19hmL5-U";
@@ -123,12 +125,20 @@ public class UserManagement extends AES256Util {
             ex.printStackTrace();
         }
 
+        settingsPrefs.put("playSound", "true");
+        settingsPrefs.put("useStoryMode", "true");
+
         return signUpResult;
     }
 
     protected void registerAutoSignIn(String email, String password){
         signInPrefs.put("email", email);
         signInPrefs.put("password", password);
+    }
+
+    protected void removeAutoSignIn(){
+        signInPrefs.remove("email");
+        signInPrefs.remove("password");
     }
 
     public boolean signOut(){
@@ -179,5 +189,13 @@ public class UserManagement extends AES256Util {
         }
 
         return email;
+    }
+
+    public Preferences getUserPrefs(){
+        return settingsPrefs;
+    }
+
+    public Preferences getAutoSignInPrefs(){
+        return signInPrefs;
     }
 }

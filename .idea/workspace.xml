@@ -5,23 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1a9aadb-1d81-4b36-bdb0-a92c8547b5c4" name="Changes" comment="SignUp/SignIn is now available.">
+      <change afterPath="$PROJECT_DIR$/src/main/moon_lander/Bumper/BumperManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/.firebaserc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/firebase.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/firestore.indexes.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/firestore.rules" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions/ScoreManagement.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions/package.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Score/Helper/ScoreManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Score/Helper/ScoreManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Score/View/ScoreView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Score/View/ScoreView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/BumperManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/BumperManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UserManagement/Helper/UserManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserManagement/Helper/UserManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Bumper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Bumper/Bumper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/BumperManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Canvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Canvas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Controller/CanvasViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Controller/CanvasViewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Framework.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/MobileController/MobileControlHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/MobileController/Models/UserControllerModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/Music.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/moon_lander/PlayerRocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/fonts/Maplestory_OTF_Bold.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/fonts/Maplestory_OTF_Light.otf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,8 +97,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -116,7 +116,6 @@
   <component name="ProjectId" id="1yOyp0KhOfRfADf5BEr0kKXLeo1" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -125,22 +124,26 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/moon_lander" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
-    <property name="two.files.diff.last.used.file" value="$USER_HOME$/Downloads/2021_SourceCodeAnalysis-Kim-s-Branches 3/src/main/moon_lander/LandingArea.java" />
+    <property name="two.files.diff.last.used.file" value="$USER_HOME$/Downloads/2021_SourceCodeAnalysis-Kim-s-Branches 4/src/main/moon_lander/PlayerRocket.java" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/moon_lander" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/resources/include" />
-      <recent name="$PROJECT_DIR$/src/resources/images" />
-      <recent name="$PROJECT_DIR$/src/resources" />
       <recent name="$PROJECT_DIR$/src/main/moon_lander" />
+      <recent name="$PROJECT_DIR$/src/resources/images" />
+      <recent name="$PROJECT_DIR$/src/resources/include" />
+      <recent name="$PROJECT_DIR$/src/resources" />
       <recent name="$PROJECT_DIR$/resources/images" />
     </key>
   </component>
@@ -265,6 +268,28 @@
       <workItem from="1634297916762" duration="1429000" />
       <workItem from="1634302008779" duration="847000" />
       <workItem from="1634307184156" duration="276000" />
+      <workItem from="1634692344893" duration="33000" />
+      <workItem from="1635989135289" duration="221000" />
+      <workItem from="1636358185183" duration="3935000" />
+      <workItem from="1636363776911" duration="1465000" />
+      <workItem from="1636712046909" duration="274000" />
+      <workItem from="1636880836742" duration="1862000" />
+      <workItem from="1636948436276" duration="271000" />
+      <workItem from="1636948965900" duration="4000" />
+      <workItem from="1636950000201" duration="57000" />
+      <workItem from="1636963047102" duration="47000" />
+      <workItem from="1637215746503" duration="21000" />
+      <workItem from="1637215990583" duration="6406000" />
+      <workItem from="1637570194904" duration="1496000" />
+      <workItem from="1637575841985" duration="1703000" />
+      <workItem from="1637644112448" duration="5000" />
+      <workItem from="1638014829799" duration="1332000" />
+      <workItem from="1638160106617" duration="936000" />
+      <workItem from="1638161274638" duration="18079000" />
+      <workItem from="1638236763697" duration="178000" />
+      <workItem from="1638237115397" duration="685000" />
+      <workItem from="1638254109323" duration="591000" />
+      <workItem from="1638256298059" duration="2368000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp/SignIn is now available.">
       <created>1632372256959</created>
@@ -301,6 +326,10 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.IllegalArgumentException" package="java.lang" />
           <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.StackOverflowError" package="java.lang" />
+          <option name="timeStamp" value="2" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
