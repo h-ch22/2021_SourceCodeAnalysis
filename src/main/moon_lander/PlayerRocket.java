@@ -28,22 +28,22 @@ public class PlayerRocket extends MobileControlHelper {
     /**
      * X coordinate of the rocket.
      */
-    public static int x;
+    private int x;
     /**
      * Y coordinate of the rocket.
      */
-    public static int y, yAxis;
+    private int y, yAxis;
     
     /**
      * Is rocket landed?
      */
-    public boolean landed;
+    private boolean landed;
     
     /**
      * Has rocket crashed?
      */
-    public boolean crashed;
-        
+    private boolean crashed;
+    public static boolean paused;
     /**
      * Accelerating speed of the rocket.
      */
@@ -56,17 +56,20 @@ public class PlayerRocket extends MobileControlHelper {
     /**
      * Maximum speed that rocket can have without having a crash when landing.
      */
-    public int topLandingSpeed;
+    private int topLandingSpeed;
     
     /**
      * How fast and to which direction rocket is moving on x coordinate?
      */
-    public static int speedX;
+    private int speedX;
     /**
      * How fast and to which direction rocket is moving on y coordinate?
      */
-    public static int speedY;
-            
+    private int speedY;
+
+    private int speedXPaused;
+
+    public int speedYPaused;
     /**
      * Image of the rocket in air.
      */
@@ -84,16 +87,16 @@ public class PlayerRocket extends MobileControlHelper {
      */
     private BufferedImage rocketFireImg;
     
-    
-    public static int rocketImgWidth;
+
+    private int rocketImgWidth;
     /**
      * Height of rocket.
      */
-    public static int rocketImgHeight;
+    private int rocketImgHeight;
     
     private int gravity;
-    
-    
+
+
     public PlayerRocket(int i)
     {
         Initialize(i);
@@ -112,7 +115,7 @@ public class PlayerRocket extends MobileControlHelper {
         
         speedAccelerating = 2;
         speedStopping = 1;
-        
+
         gravity=i;
         
         topLandingSpeed = 5;
@@ -148,12 +151,14 @@ public class PlayerRocket extends MobileControlHelper {
     {
         landed = false;
         crashed = false;
-
+        paused = false;
         x = random.nextInt(Framework.frameWidth - rocketImgWidth);
         y = 10;
         
         speedX = 0;
         speedY = 0;
+        speedXPaused = 0;
+        speedYPaused = 0;
     }
     
     
@@ -164,34 +169,63 @@ public class PlayerRocket extends MobileControlHelper {
     {
         getUserControl();
         // Calculating speed for moving up or down.
-        if(Canvas.keyboardKeyState(KeyEvent.VK_W))
-            speedY -= speedAccelerating;
-        else
-            speedY += speedStopping+gravity;
-        
-        // Calculating speed for moving or stopping to the left.
-        if(Canvas.keyboardKeyState(KeyEvent.VK_A))
-            speedX -= speedAccelerating;
-        else if(speedX < 0)
-            speedX += speedStopping;
-        
-        // Calculating speed for moving or stopping to the right.
-        if(Canvas.keyboardKeyState(KeyEvent.VK_D))
-            speedX += speedAccelerating;
-        else if(speedX > 0)
-            speedX -= speedStopping;
+        if(!paused) {
+            if (Canvas.keyboardKeyState(KeyEvent.VK_W))
+                speedY -= speedAccelerating;
+            else
+                speedY += speedStopping+gravity;
+
+            // Calculating speed for moving or stopping to the left.
+            if (Canvas.keyboardKeyState(KeyEvent.VK_A))
+                speedX -= speedAccelerating;
+            else if (speedX < 0)
+                speedX += speedStopping;
+
+            // Calculating speed for moving or stopping to the right.
+            if (Canvas.keyboardKeyState(KeyEvent.VK_D))
+                speedX += speedAccelerating;
+            else if (speedX > 0)
+                speedX -= speedStopping;
+            if (Canvas.keyboardKeyState(KeyEvent.VK_P)) {
+                paused = true;
+                Pause();
+
+            }
+        }
+        else {
+                if(Canvas.keyboardKeyState(KeyEvent.VK_R)) {
+                    paused = false;
+                    Resume();
+
+                }
+            }
 
         speedX += axisX;
         speedY -= axisY;
 
         x += speedX;
         y += speedY;
+        }
+
+
+    public void Pause() {
+        speedXPaused = speedX;
+        speedYPaused = speedY;
+        speedX = 0;
+        speedY = 0;
+        speedStopping = 0;
+
     }
-    
+    public void Resume() {
+
+        speedX = speedXPaused;
+        speedY = speedYPaused;
+        speedStopping = 1;
+    }
     public void Draw(Graphics2D g2d)
     {
         g2d.setColor(Color.white);
-        g2d.drawString("Rocket coordinates: " + x + " : " + y, 5, 15);
+        g2d.drawString("로켓 좌표 : " + x + " : " + y, 5, 15);
         
         // If the rocket is landed.
         if(landed)
@@ -212,4 +246,97 @@ public class PlayerRocket extends MobileControlHelper {
             g2d.drawImage(rocketImg, x, y, null);
         }
     }
+
+    public int getX() {
+		return x;
+	}
+
+
+	public int getY() {
+		return y;
+	}
+
+
+	public int getyAxis() {
+		return yAxis;
+	}
+
+	public int getSpeedAccelerating() {
+		return speedAccelerating;
+	}
+
+	public int getSpeedStopping() {
+		return speedStopping;
+	}
+
+
+	public int getTopLandingSpeed() {
+		return topLandingSpeed;
+	}
+
+
+	public int getSpeedX() {
+		return speedX;
+	}
+
+
+	public int getSpeedY() {
+		return speedY;
+	}
+
+
+	public int getRocketImgWidth() {
+		return rocketImgWidth;
+	}
+
+
+	public int getRocketImgHeight() {
+		return rocketImgHeight;
+	}
+
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+
+	public void setyAxis(int yAxis) {
+		this.yAxis = yAxis;
+	}
+
+
+	public void setLanded(boolean landed) {
+		this.landed = landed;
+	}
+
+
+	public void setCrashed(boolean crashed) {
+		this.crashed = crashed;
+	}
+
+
+	public void setSpeedAccelerating(int speedAccelerating) {
+		this.speedAccelerating = speedAccelerating;
+	}
+
+
+	public void setSpeedX(int speedX) {
+		this.speedX = speedX;
+	}
+
+
+	public void setSpeedY(int speedY) {
+		this.speedY = speedY;
+	}
+
+	public boolean isLanded() {
+		return landed;
+	}
+	
+	
 }

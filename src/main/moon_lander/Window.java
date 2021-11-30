@@ -1,6 +1,7 @@
 package main.moon_lander;
 
 import UserManagement.View.SignInView;
+import main.moon_lander.MobileController.MobileControlHelper;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -12,9 +13,13 @@ import javax.swing.SwingUtilities;
  */
 
 public class Window extends JFrame{
-        
+
     public Window()
     {
+        MobileControlHelper controlHelper = new MobileControlHelper();
+
+        controlHelper.updateGameStatus(Framework.GameState.MAIN_MENU);
+
         // Sets the title for this frame.
         this.setTitle("Moon Lander");
         

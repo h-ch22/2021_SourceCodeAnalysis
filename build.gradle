@@ -6,7 +6,6 @@ group 'org.example'
 version '1.0-SNAPSHOT'
 sourceSets.main.java.srcDirs = ['src']
 
-
 repositories {
     mavenCentral()
 }
@@ -21,9 +20,6 @@ task(runMain, dependsOn: 'classes', type: JavaExec){
     main = "main.moon_lander.Window"
     classpath = sourceSets.main.runtimeClasspath
 }
-tasks.withType(JavaCompile){
-    options.encoding = "UTF-8"
-}
 
 sourceSets{
     main {
@@ -31,6 +27,7 @@ sourceSets{
             srcDirs "src/resources/fonts"
             srcDirs "src/resources/images"
             srcDirs "src/resources/include"
+            srcDirs "src/resources/musics"
         }
     }
 }

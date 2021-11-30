@@ -15,7 +15,6 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.*;
 
 /**
  * Actual game.
@@ -39,7 +38,10 @@ public class Game extends ScoreManagement {
      * Game background image.
      */
     private BufferedImage backgroundImg;
-    
+
+    private BufferedImage backgroundEarthImg;
+
+    private BufferedImage backgroundSpaceImg;
     /**
      * Red border of the frame. It is used when player crash the rocket.
      */
@@ -48,15 +50,19 @@ public class Game extends ScoreManagement {
     private MobileControlHelper controlHelper = new MobileControlHelper();
 
     private int stage;
+
+    private String background;
+
     private String[] mapdata;
     private BumperManager bumperManager;
+    private Fuel fuel;
 
-    public Game(int i)
+    public Game(int stage)
     {
         super();
-        
-        stage = i;
 
+        this.stage = stage;
+        background = "Earth";
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
         
         Thread threadForInitGame = new Thread() {
@@ -66,7 +72,7 @@ public class Game extends ScoreManagement {
                 Initialize();
                 // Load game files (images, sounds, ...)
                 LoadContent();
-                
+                Music.playMusic("src/resources/musics/backgroundmusic.wav",true);
                 Framework.gameState = Framework.GameState.PLAYING;
                 controlHelper.updateGameStatus(Framework.gameState);
             }
@@ -91,9 +97,10 @@ public class Game extends ScoreManagement {
     	int landingAreaSpeed = Integer.parseInt(mapdata[1]);
         playerRocket = new PlayerRocket(gravity);
         landingArea  = new LandingArea(landingAreaSpeed);
-        bumperManager = new BumperManager(stage);
+        bumperManager = new BumperManager(stage, playerRocket);
+        fuel = new Fuel();
     }
-    
+
     private void GetFile() throws IOException {
     	InputStream in = this.getClass().getClassLoader().getResourceAsStream("MapData.txt");
     	BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -113,7 +120,11 @@ public class Game extends ScoreManagement {
         {
             URL backgroundImgUrl = this.getClass().getClassLoader().getResource("background.jpg");
             backgroundImg = ImageIO.read(backgroundImgUrl);
-            
+            URL backgroundEarthImgUrl = this.getClass().getClassLoader().getResource("background_earth.jpg");
+            backgroundEarthImg = ImageIO.read(backgroundEarthImgUrl);
+            URL backgroundSpaceImgUrl = this.getClass().getClassLoader().getResource("background_space.jpg");
+            backgroundSpaceImg = ImageIO.read(backgroundSpaceImgUrl);
+
             URL redBorderImgUrl = this.getClass().getClassLoader().getResource("red_border.png");
             redBorderImg = ImageIO.read(redBorderImgUrl);
         }
@@ -130,48 +141,62 @@ public class Game extends ScoreManagement {
     {
         playerRocket.ResetPlayer();
         landingArea.ResetArea();
+        fuel.ResetFuel();
         controlHelper.updateGameStatus(Framework.GameState.PLAYING);
+        background = "Earth";
     }
-    
-    
-    /**
-     * Update game logic.
-     * 
-     * @param gameTime gameTime of the game.
-     * @param mousePosition current mouse position.
-     */
-    public void UpdateGame(long gameTime, Point mousePosition)
+
+    public void UpdateGame(long gameTime, Point mousePosition, long pauseTime)
     {
         // Move the rocket
         playerRocket.Update();
         landingArea.Update();
-        controlHelper.updateCoordinates(playerRocket.x, playerRocket.y);
+        fuel.Update(playerRocket);
+        fuel.crashCheck(playerRocket);
+        if(fuel.isFuelEmpty){
+            playerRocket.setCrashed(true);
+            Framework.gameState = Framework.GameState.GAMEOVER;
+        }
+
+        controlHelper.updateCoordinates(playerRocket.getX(), playerRocket.getY());
         // Checks where the player rocket is. Is it still in the space or is it landed or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing area.
-        if(playerRocket.y + playerRocket.rocketImgHeight - 10 > landingArea.y)
-        {
-            // Here we check if the rocket is over landing area.
-            if((playerRocket.x > landingArea.x) && (playerRocket.x < landingArea.x + landingArea.landingAreaImgWidth - playerRocket.rocketImgWidth))
-            {
-                // Here we check if the rocket speed isn't too high.
-                if(playerRocket.speedY <= playerRocket.topLandingSpeed){
-                    playerRocket.landed = true;
+        if (background == "Moon") {
+            if (playerRocket.getY() + playerRocket.getRocketImgHeight() - 10 > landingArea.y) {
+                // Here we check if the rocket is over landing area.
+                if ((playerRocket.getX() > landingArea.x) 
+                		&& (playerRocket.getX() < landingArea.x + landingArea.landingAreaImgWidth - playerRocket.getRocketImgWidth())) {
+                    // Here we check if the rocket speed isn't too high.
+                    if (playerRocket.getSpeedY() <= playerRocket.getTopLandingSpeed()) {
+                        playerRocket.setLanded(true);
 
-                    updateScore(gameTime / Framework.secInNanosec);
-                }
+                        updateScore((stage + 1) * 10000 * ((gameTime-pauseTime) / Framework.secInNanosec), Integer.toString(stage + 1));
+                    } else
+                        playerRocket.setCrashed(true);;
+                } else
+                    playerRocket.setCrashed(true);;
 
-                else
-                    playerRocket.crashed = true;
+                Framework.gameState = Framework.GameState.GAMEOVER;
+                controlHelper.updateGameStatus(Framework.gameState);
             }
-            else
-                playerRocket.crashed = true;
-
-            Framework.gameState = Framework.GameState.GAMEOVER;
-            controlHelper.updateGameStatus(Framework.gameState);
-            
+            bumperManager.checkCollision(playerRocket, playerRocket.getX(), playerRocket.getY());
         }
-        
-        bumperManager.checkCollision(playerRocket.x, playerRocket.y);
+        changeBackground();
+    }
+    private void changeBackground(){
+        if(background == "Earth") {
+            if(playerRocket.getY()<-70) {
+                playerRocket.setY((int)(Framework.frameHeight * 0.9));
+                background = "Space";
+            }
+        }
+        if(background == "Space") {
+            if(playerRocket.getY()<-70) {
+                background = "Moon";
+                playerRocket.setY(0);
+                playerRocket.setSpeedY(0);
+            }
+        }
     }
     
     /**
@@ -182,15 +207,27 @@ public class Game extends ScoreManagement {
      */
     public void Draw(Graphics2D g2d, Point mousePosition)
     {
-        g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
-        
-        landingArea.Draw(g2d);
-        
+        if(background == "Moon"){
+            g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
+            landingArea.Draw(g2d);
+            bumperManager.draw(g2d);
+        }
+        else if(background == "Earth") {
+            g2d.drawImage(backgroundEarthImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
+        }
+        else if(background == "Space") {
+            g2d.drawImage(backgroundSpaceImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
+        }
         playerRocket.Draw(g2d);
-        
-        bumperManager.Draw(g2d);
+        fuel.Draw(g2d);
     }
-    
+
+    public void DrawPause(Graphics2D g2d, Point mousePosition)
+    {
+        g2d.drawString("PAUSE", Framework.frameWidth / 2 - 10, Framework.frameHeight / 2);
+
+        playerRocket.Draw(g2d);
+    }
     
     /**
      * Draw the game over screen.
@@ -199,16 +236,16 @@ public class Game extends ScoreManagement {
      * @param mousePosition Current mouse position.
      * @param gameTime Game time in nanoseconds.
      */
-    public void DrawGameOver(Graphics2D g2d, Point mousePosition, long gameTime)
+    public void DrawGameOver(Graphics2D g2d, Point mousePosition, long gameTime, long pauseTime)
     {
         Draw(g2d, mousePosition);
         
         g2d.drawString("스페이스바 또는 엔터키를 누르면 다시 시작합니다.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 70);
         
-        if(playerRocket.landed)
+        if(playerRocket.isLanded())
         {
             g2d.drawString("잘했어요!", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3);
-            g2d.drawString(gameTime / Framework.secInNanosec + "초만에 성공했습니다.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
+            g2d.drawString((gameTime-pauseTime) / Framework.secInNanosec + "초만에 성공했습니다.", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
         }
         else
         {

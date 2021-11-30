@@ -34,13 +34,15 @@ public class ScoreManagement extends UserManagement {
         super();
     }
 
-    protected void updateScore(Long score){
+    protected void updateScore(Long score, String stage){
         Map<String, Object> scoreData = new HashMap<>();
         Date current = new Date();
 
         scoreData.put("score", score);
+        scoreData.put("date", format.format(current));
+        scoreData.put("stage", stage);
 
-        db.collection("Users").document(userRecord.getUid()).collection("Score").document(format.format(current)).set(scoreData);
+        db.collection("Users").document(userRecord.getUid()).collection("Score").add(scoreData);
     }
 
     protected Vector<Vector> getScores(){
@@ -51,8 +53,9 @@ public class ScoreManagement extends UserManagement {
 
             for(QueryDocumentSnapshot document : documents){
                 Vector<String> data = new Vector<>();
-                data.addElement(document.getId());
+                data.addElement(document.get("date").toString());
                 data.addElement(document.get("score").toString());
+                data.addElement(document.get("stage").toString());
 
                 scoreData.addElement(data);
             }
@@ -80,7 +83,7 @@ public class ScoreManagement extends UserManagement {
                         case MODIFIED :
                             CollectionReference rankRef = db.collection("Users");
 
-                            Query query = rankRef.orderBy("maxScore", Query.Direction.ASCENDING).limit(3);
+                            Query query = rankRef.orderBy("maxScore", Query.Direction.DESCENDING).limit(3);
                             ApiFuture<QuerySnapshot> queryResult = query.get();
 
                             try {

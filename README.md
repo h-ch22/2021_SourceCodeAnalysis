@@ -19,3 +19,12 @@
 
 > ### Oct 08, 2021
 > #### Mobile Control is now available.
+
+> ### Oct 12, 2021
+> #### RC 1 for 1st Project Report.
+
+> ### Oct 13, 2021
+> #### Final Release for 1st Project.
+
+> ### Oct 15, 2021
+> #### Official Release for 1st Project.

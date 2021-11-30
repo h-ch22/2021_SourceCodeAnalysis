@@ -3,7 +3,6 @@ package main.moon_lander.MobileController;
 import UserManagement.Helper.UserManagement;
 import com.google.firebase.database.*;
 import main.moon_lander.Framework;
-import main.moon_lander.Game;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +10,7 @@ import java.util.Map;
 public class MobileControlHelper extends UserManagement  {
     private final DatabaseReference controllerRef = FirebaseDatabase.getInstance().getReference("Controllers");
     private final DatabaseReference coordinateRef = FirebaseDatabase.getInstance().getReference("Coordinates").child(userRecord.getUid());
-    private final DatabaseReference statusRef = FirebaseDatabase.getInstance().getReference("GameStatus").child(userRecord.getUid());
+    private final DatabaseReference statusRef = FirebaseDatabase.getInstance().getReference("GameStatus");
     private String gameStatus;
     protected int axisX, axisY;
 
@@ -26,11 +25,14 @@ public class MobileControlHelper extends UserManagement  {
 
     public void updateGameStatus(Framework.GameState state){
         switch(state){
-            case PLAYING :
+            case PLAYING:
                 gameStatus = "PLAYING";
                 break;
 
             case MAIN_MENU :
+                gameStatus = "MAIN MENU";
+                break;
+
             case GAME_CONTENT_LOADING :
             case OPTIONS :
             case STARTING :
@@ -43,7 +45,7 @@ public class MobileControlHelper extends UserManagement  {
 
         status.put("Status", gameStatus);
 
-        statusRef.updateChildrenAsync(status);
+        statusRef.child(userRecord.getUid()).updateChildrenAsync(status);
     }
 
     public void receiveGameSTART(Framework game){
@@ -55,7 +57,7 @@ public class MobileControlHelper extends UserManagement  {
 
                     if(status.equals("REQUEST TO START")){
                         if(Framework.gameState == Framework.GameState.MAIN_MENU){
-                            game.newGame();
+                            game.newGame(0);
                         }
 
                         else if(Framework.gameState == Framework.GameState.GAMEOVER){
@@ -72,7 +74,7 @@ public class MobileControlHelper extends UserManagement  {
 
                     if(status.equals("REQUEST TO START")){
                         if(Framework.gameState == Framework.GameState.MAIN_MENU){
-                            game.newGame();
+                            game.newGame(0);
                         }
 
                         else if(Framework.gameState == Framework.GameState.GAMEOVER){

@@ -23,8 +23,10 @@ class Bumper {
      */
     private BufferedImage bumperImg;
     
-    public boolean active;
-    public long activeTime;
+    
+    private boolean active;
+    
+    private long activeTime;
     
     
     /**
@@ -33,33 +35,49 @@ class Bumper {
     
     public Bumper(int x, int y)
     {
-        Initialize(x,y);
-        LoadContent();
+        initialize(x,y);
     }
     
     
-    private void Initialize(int x, int y)
+    private void initialize(int x, int y)
     {   
         this.x = x;
         this.y = y;
-    }
-    
-    private void LoadContent()
-    {
+        
         try
         {
-            URL BumperImgUrl = this.getClass().getClassLoader().getResource("bumper.png");
-            bumperImg = ImageIO.read(BumperImgUrl);
+            URL bumperImgUrl = this.getClass().getClassLoader().getResource("bumper.png");
+            bumperImg = ImageIO.read(bumperImgUrl);
         }
         catch (IOException ex) {
             Logger.getLogger(LandingArea.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void Draw(Graphics2D g2d)
+    public void draw(Graphics2D g2d)
     {
         g2d.drawImage(bumperImg, x-(bumperImg.getWidth()/2), y-(bumperImg.getWidth()/2), null);
     }
+
+
+	public boolean isActive() {
+		return active;
+	}
+
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+
+	public long getActiveTime() {
+		return activeTime;
+	}
+
+
+	public void setActiveTime(long activeTime) {
+		this.activeTime = activeTime;
+	}
     
     
 }

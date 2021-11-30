@@ -7,12 +7,15 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 /**
  * Framework that controls the game (Game.java) that created it, update it and draw it on the screen.
@@ -56,7 +59,7 @@ public class Framework extends Canvas {
     /**
      * Possible states of the game
      */
-    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING, GAMEOVER, DESTROYED, PAUSED}
+    public static enum GameState{STARTING, VISUALIZING, GAME_CONTENT_LOADING, MAIN_MENU, OPTIONS, PLAYING, GAMEOVER, DESTROYED}
     /**
      * Current state of the game
      */
@@ -68,7 +71,134 @@ public class Framework extends Canvas {
     private long gameTime;
     // It is used for calculating elapsed time.
     private long lastTime;
-    
+
+    private long pauseTime;
+
+    private final JButton btn1 = new JButton("stage 1");
+    private final JButton btn2 = new JButton("stage 2");
+    private final JButton btn3 = new JButton("stage 3");
+    private final JButton btn4 = new JButton("stage 4");
+    private final JButton btn5 = new JButton("stage 5");
+
+    public void setButton() {
+        btn1.setBounds(50, 500, 100, 50);
+        btn2.setBounds(200, 500, 100, 50);
+        btn3.setBounds(350, 500, 100, 50);
+        btn4.setBounds(500, 500, 100, 50);
+        btn5.setBounds(650, 500, 100, 50);
+
+        btn1.setVisible(false);
+        btn2.setVisible(false);
+        btn3.setVisible(false);
+        btn4.setVisible(false);
+        btn5.setVisible(false);
+
+        btn1.addMouseListener(new MouseAdapter() {
+
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Button1Pressed();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        btn2.addMouseListener(new MouseAdapter() {
+
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Button2Pressed();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        btn3.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Button3Pressed();
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        btn4.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Button4Pressed();
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        btn5.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Button5Pressed();
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+
+        add(btn1);
+        add(btn2);
+        add(btn3);
+        add(btn4);
+        add(btn5);
+    }
+
+    public void Button1Pressed(){
+
+        gameState = GameState.PLAYING;
+        newGame(0);
+    }
+    public void Button2Pressed(){
+
+        gameState = GameState.PLAYING;
+        newGame(1);
+    }
+    public void Button3Pressed(){
+
+        gameState = GameState.PLAYING;
+        newGame(2);
+    }
+    public void Button4Pressed(){
+
+        gameState = GameState.PLAYING;
+        newGame(3);
+    }
+    public void Button5Pressed(){
+
+        gameState = GameState.PLAYING;
+        newGame(4);
+    }
     // The actual game
     private Game game;
     private ScoreManagement scoreHelper = new ScoreManagement();
@@ -101,7 +231,7 @@ public class Framework extends Canvas {
      */
     private void Initialize()
     {
-        
+        setButton();
     }
     
     /**
@@ -137,20 +267,26 @@ public class Framework extends Canvas {
             switch (gameState)
             {
                 case PLAYING:
-                    gameTime += System.nanoTime() - lastTime;
-                    
-                    game.UpdateGame(gameTime, mousePosition());
-                    
-                    lastTime = System.nanoTime();
+                    if(!PlayerRocket.paused) {
+                        gameTime += System.nanoTime() - lastTime;
 
+                        game.UpdateGame(gameTime, mousePosition(), pauseTime);
+
+                        lastTime = System.nanoTime();
+                    }
+                    else{
+                        pauseTime += System.nanoTime() - lastTime;
+
+                        game.UpdateGame(gameTime, mousePosition(), pauseTime);
+
+                        lastTime = System.nanoTime();
+                    }
                 break;
                 case GAMEOVER:
+                case MAIN_MENU:
                     controlHelper.receiveGameSTART(this);
 
                     break;
-                case MAIN_MENU:
-                    //...
-                break;
                 case OPTIONS:
                     //...
                 break;
@@ -187,8 +323,6 @@ public class Framework extends Canvas {
                     }
                 break;
 
-                case PAUSED:
-
             }
             
             // Repaint the screen.
@@ -216,12 +350,25 @@ public class Framework extends Canvas {
         switch (gameState)
         {
             case PLAYING:
+                btn1.setVisible(false);
+                btn2.setVisible(false);
+                btn3.setVisible(false);
+                btn4.setVisible(false);
+                btn5.setVisible(false);
                 game.Draw(g2d, mousePosition());
                 placeMyPage(false);
+                if(PlayerRocket.paused) {
+                    game.DrawPause(g2d, getMousePosition());
+                }
                 break;
 
             case GAMEOVER:
-                game.DrawGameOver(g2d, mousePosition(), gameTime);
+                btn1.setVisible(false);
+                btn2.setVisible(false);
+                btn3.setVisible(false);
+                btn4.setVisible(false);
+                btn5.setVisible(false);
+                game.DrawGameOver(g2d, mousePosition(), gameTime, pauseTime);
                 scoreHelper.getRank();
                 scoreHelper.drawRank(g2d);
                 placeMyPage(true);
@@ -230,7 +377,11 @@ public class Framework extends Canvas {
             case MAIN_MENU:
                 g2d.drawImage(moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
                 g2d.setColor(Color.white);
-                g2d.drawString("시작하려면 아무 키나 누르세요.", frameWidth / 2 - 100, frameHeight / 2 + 30);
+                btn1.setVisible(true);
+                btn2.setVisible(true);
+                btn3.setVisible(true);
+                btn4.setVisible(true);
+                btn5.setVisible(true);
 
                 placeMyPage(true);
 
@@ -250,13 +401,13 @@ public class Framework extends Canvas {
     /**
      * Starts new game.
      */
-    public void newGame()
+    public void newGame(int stage)
     {
         // We set gameTime to zero and lastTime to current time for later calculations.
         gameTime = 0;
         lastTime = System.nanoTime();
-        
-        game = new Game(3); //temporalData(0~4)
+        pauseTime = 0;
+        game = new Game(stage);
     }
     
     /**
@@ -267,11 +418,11 @@ public class Framework extends Canvas {
         // We set gameTime to zero and lastTime to current time for later calculations.
         gameTime = 0;
         lastTime = System.nanoTime();
-        
+        pauseTime = 0;
         game.RestartGame();
         
         // We change game status so that the game can start.
-        gameState = GameState.PLAYING;
+        gameState = GameState.MAIN_MENU;
     }
     
     /**
@@ -308,7 +459,7 @@ public class Framework extends Canvas {
         switch (gameState)
         {
             case MAIN_MENU:
-                newGame();
+//                newGame();
             break;
 
             case GAMEOVER:

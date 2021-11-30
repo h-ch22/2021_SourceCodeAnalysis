@@ -36,13 +36,13 @@ public class LandingArea {
      */
     public int landingAreaImgWidth;
     
-    private boolean isGoingRight;
-    
-    private int vecticalPer100ms=5;
-    
-    private long waitTime=0;
-    
-    
+    public boolean isGoingRight;
+
+    public int vecticalPer100ms=5;
+
+    public long waitTime=0;
+
+
     public LandingArea(int i)
     {
         Initialize(i);
@@ -56,7 +56,7 @@ public class LandingArea {
         x = (int)(Framework.frameWidth * 0.46);
         // Y coordinate of the landing area is at 86% frame height.
         y = (int)(Framework.frameHeight * 0.88);
-        
+
         vecticalPer100ms = 5 + i;//��Ȯ���� mapdata.txt�� i*2�� ������ �ι�° ������
     }
     
@@ -76,10 +76,10 @@ public class LandingArea {
     public void Update() {
 	    if(System.currentTimeMillis()-waitTime>100) {
 	    	waitTime=System.currentTimeMillis();
-	    	
+
 	    	if(isGoingRight) { x += vecticalPer100ms;}
 		    else { x -= vecticalPer100ms;}
-		    	
+
 		    if(x<=0) {
 		    	x=0;
 		    	isGoingRight = true;
@@ -89,15 +89,15 @@ public class LandingArea {
 		    	isGoingRight = false;
 		    }
 	    }
-    		
+
     }
-    
+
     public void ResetArea() {
     	Random random = new Random();
     	x=random.nextInt(Framework.frameWidth-landingAreaImgWidth);
     	isGoingRight=random.nextBoolean();
     }
-    
+
     public void Draw(Graphics2D g2d)
     {
         g2d.drawImage(landingAreaImg, x, y, null);

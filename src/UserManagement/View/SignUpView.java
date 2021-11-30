@@ -1,11 +1,12 @@
 package UserManagement.View;
 
 import UserManagement.Controller.SignUpViewController;
+import Frameworks.Models.placePanel;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class SignUpView extends JFrame {
+public class SignUpView extends JFrame implements placePanel {
     public JButton btn_signUp, btn_cancel;
     public JTextField field_email, field_nickName;
     public JPasswordField field_password, field_checkPassword;
@@ -27,7 +28,7 @@ public class SignUpView extends JFrame {
         new SignUpViewController(this);
     }
 
-    private void placePanel(JPanel signUpPanel){
+    public void placePanel(JPanel signUpPanel){
         signUpPanel.setLayout(new BoxLayout(signUpPanel, BoxLayout.Y_AXIS));
         signUpPanel.setAlignmentX(CENTER_ALIGNMENT);
 
