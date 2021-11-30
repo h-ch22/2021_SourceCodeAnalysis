@@ -46,14 +46,10 @@ public class GameManager {
             }
         }
     }
-
-    public static void stopMusic(){
+    public static void playMusic(String pathName, boolean isLoop) {
         if(clip != null){
             clip.stop();
         }
-    }
-    public static void playMusic(String pathName, boolean isLoop) {
-        stopMusic();
         try {
             clip = AudioSystem.getClip();
             File audioFile = new File(pathName);

@@ -1,0 +1,301 @@
+@startuml
+class main.moon_lander.Controller.CanvasViewController {
+- Canvas canvas
++ void actionPerformed(ActionEvent)
+}
+class net.Helper.AES256Util {
+- {static} String alg
+- String SECRET_KEY
+- String IV
+# String encrypt(String)
+# String decrypt(String)
+}
+abstract class main.moon_lander.Canvas {
+- {static} boolean[] keyboardState
++ JButton btn_myPage
++ Window gameWindow
++ void placeMyPage(boolean)
++ {abstract}void Draw(Graphics2D)
++ void paintComponent(Graphics)
++ {static} boolean keyboardKeyState(int)
++ void keyPressed(KeyEvent)
++ void keyReleased(KeyEvent)
++ void keyTyped(KeyEvent)
++ {abstract}void keyReleasedFramework(KeyEvent)
+}
+class main.moon_lander.Bumper {
+- int x
+- int y
+- BufferedImage bumperImg
++ boolean active
++ long activeTime
+- void Initialize(int,int)
+- void LoadContent()
++ void Draw(Graphics2D)
+}
+class UserManagement.Controller.SignUpViewController {
+- SignUpView view
+- String email
++ void actionPerformed(ActionEvent)
+}
+interface Frameworks.Models.placePanel {
+~ void placePanel(JPanel)
+}
+class UserManagement.View.SignInView {
++ JButton btn_signIn
++ JTextField field_email
++ JPasswordField field_password
++ JPanel signInPanel
++ JCheckBox checkBox_autoSignIn
++ void placePanel(JPanel)
+}
+class main.moon_lander.GameManager {
+- {static} int speedXPaused
+- {static} int speedYPaused
++ {static} boolean isPaused
+- {static} Clip clip
++ void ResetGameManager()
++ {static} void pause(int,int)
++ {static} void resume()
++ void changeBackground(PlayerRocket)
++ {static} void stopMusic()
++ {static} void playMusic(String,boolean)
+- void Initiallize()
+}
+class Score.Helper.ScoreManagement {
+- SimpleDateFormat format
+- BufferedImage ic_goldCup
+- String score_1st
+- Graphics2D g2d
+- Vector<Vector> scoreData
+# HashMap<String,Long> rankData
+# void updateScore(Long,String)
+# Vector<Vector> getScores()
++ void getRank()
++ void drawRank(Graphics2D)
+- void loadImage()
+}
+class main.moon_lander.MobileController.MobileControlHelper {
+- DatabaseReference controllerRef
+- DatabaseReference coordinateRef
+- DatabaseReference statusRef
+- String gameStatus
+# int axisX
++ void updateCoordinates(int,int)
++ void updateGameStatus(Framework.GameState)
++ void receiveGameSTART(Framework)
++ void getUserControl()
+}
+class main.moon_lander.BumperManager {
+- int w
+- int h
+- Bumper[] bumpers
+- int[][] bumperXY
+- int rocketW
+- int rocketH
+- int bumperRange
+- int amountOfBumper
+- void GetData(int)
+- void GetRange()
+- void Initialize()
++ void checkCollision(int,int)
+- boolean checkBumperInside(int,int,int,int)
+- int calculateSpeed(int,int,int)
++ void Draw(Graphics2D)
+}
+class main.moon_lander.Framework {
++ {static} int frameWidth
++ {static} int frameHeight
++ {static} long secInNanosec
++ {static} long milisecInNanosec
+- int GAME_FPS
+- long GAME_UPDATE_PERIOD
++ {static} GameState gameState
+- long gameTime
+- long lastTime
+- long pauseTime
+- JButton btn1
+- JButton btn2
+- JButton btn3
+- JButton btn4
+- JButton btn5
+- Game game
+- ScoreManagement scoreHelper
+- MobileControlHelper controlHelper
+- BufferedImage moonLanderMenuImg
++ void setButton()
++ void Button1Pressed()
++ void Button2Pressed()
++ void Button3Pressed()
++ void Button4Pressed()
++ void Button5Pressed()
+- void Initialize()
+- void LoadContent()
+- void GameLoop()
++ void Draw(Graphics2D)
++ void newGame(int)
++ void restartGame()
+- Point mousePosition()
++ void keyReleasedFramework(KeyEvent)
+}
+class main.moon_lander.MobileController.Models.UserControllerModel {
+~ int xAxis
+}
+class UserManagement.Helper.UserManagement {
+- {static} String BASE_URL
+- {static} String OPERATION_AUTH
+- String firebaseKey
+- {static} UserManagement instance
+- {static} FirebaseOptions options
+# {static} UserRecord userRecord
+# Firestore db
+# Preferences signInPrefs
+# {static} UserManagement getInstance()
+# int signIn(String,String)
+# boolean signUp(String,String,String)
+# void registerAutoSignIn(String,String)
++ boolean signOut()
+# String getAccountInfo(String)
+}
+class main.moon_lander.Game {
+- PlayerRocket playerRocket
+- LandingArea landingArea
+- GameManager gameManager
+- BufferedImage backgroundImg
+- BufferedImage backgroundEarthImg
+- BufferedImage backgroundSpaceImg
+- BufferedImage redBorderImg
+- MobileControlHelper controlHelper
+- int stage
++ {static} Background background
+- String[] mapdata
+- BumperManager bumperManager
+- Fuel fuel
+- void Initialize()
+- void GetFile()
+- void LoadContent()
++ void RestartGame()
++ void UpdateGame(long,Point,long)
++ void Draw(Graphics2D,Point)
++ void DrawPause(Graphics2D,Point)
++ void DrawGameOver(Graphics2D,Point,long,long)
+}
+class Score.View.ScoreView {
++ JPanel scorePanel
++ JPanel userInteractionPanel
++ JButton btn_close
++ JTable tableView
++ JScrollPane scrollPane
++ Vector<String> column
++ DefaultTableModel model
+- Dimension dimension
++ void placePanel(JPanel)
+}
+class UserManagement.Controller.SignInViewController {
+- SignInView signInView
+- String email
+- void doSignIn()
++ void actionPerformed(ActionEvent)
+}
+class main.moon_lander.LandingArea {
++ int x
++ int y
+- BufferedImage landingAreaImg
++ int landingAreaImgWidth
++ boolean isGoingRight
++ int vecticalPer100ms
++ long waitTime
+- void Initialize(int)
+- void LoadContent()
++ void Update()
++ void ResetArea()
++ void Draw(Graphics2D)
+}
+class main.moon_lander.Window {
++ {static} void main(String[])
+}
+class main.moon_lander.Fuel {
++ {static} int fuelX
++ {static} int fuelY
+- int consumeFuel
+- int remainingFuel
++ boolean isFuelEmpty
+- BufferedImage fuelImg
++ {static} int fuelImgWidth
++ {static} int fuelImgHeight
+- {static} Random random
+- void Initiallize()
+- void LoadContent()
++ void Update()
++ void ResetFuel()
++ void crashCheck()
++ {static} void relocationFuel()
++ void Draw(Graphics2D)
+}
+class UserManagement.View.SignUpView {
++ JButton btn_signUp
++ JTextField field_email
++ JPasswordField field_password
++ JPanel signUpPanel
++ void placePanel(JPanel)
+}
+class Score.Controller.ScoreViewController {
+- ScoreView view
+- UserManagement userManagement
+- JFrame gameWindow
+- void insertData()
++ void actionPerformed(ActionEvent)
+}
+class main.moon_lander.PlayerRocket {
+- Random random
++ {static} int x
++ {static} int y
++ boolean landed
++ boolean crashed
+- int speedAccelerating
+- {static} int speedStopping
++ int topLandingSpeed
++ {static} int speedX
++ {static} int speedY
+- BufferedImage rocketImg
+- BufferedImage rocketLandedImg
+- BufferedImage rocketCrashedImg
+- BufferedImage rocketFireImg
++ {static} int rocketImgWidth
++ {static} int rocketImgHeight
+- int gravity
+- void Initialize(int)
+- void LoadContent()
++ void ResetPlayer()
++ void Update()
++ {static} void setSpeed(int,int,int)
++ {static} void setRocketY(int)
++ {static} void setSpeedY(int)
++ void Draw(Graphics2D)
+}
+
+
+java.awt.event.ActionListener <|.. main.moon_lander.Controller.CanvasViewController
+Score.Helper.ScoreManagement <|-- main.moon_lander.Controller.CanvasViewController
+java.awt.event.KeyListener <|.. main.moon_lander.Canvas
+main.moon_lander.JPanel <|-- main.moon_lander.Canvas
+java.awt.event.ActionListener <|.. UserManagement.Controller.SignUpViewController
+UserManagement.Helper.UserManagement <|-- UserManagement.Controller.SignUpViewController
+Frameworks.Models.placePanel <|.. UserManagement.View.SignInView
+UserManagement.View.JFrame <|-- UserManagement.View.SignInView
+UserManagement.Helper.UserManagement <|-- Score.Helper.ScoreManagement
+UserManagement.Helper.UserManagement <|-- main.moon_lander.MobileController.MobileControlHelper
+main.moon_lander.Canvas <|-- main.moon_lander.Framework
+net.Helper.AES256Util <|-- UserManagement.Helper.UserManagement
+Score.Helper.ScoreManagement <|-- main.moon_lander.Game
+Frameworks.Models.placePanel <|.. Score.View.ScoreView
+Score.View.JFrame <|-- Score.View.ScoreView
+java.awt.event.ActionListener <|.. UserManagement.Controller.SignInViewController
+UserManagement.Helper.UserManagement <|-- UserManagement.Controller.SignInViewController
+javax.swing.JFrame <|-- main.moon_lander.Window
+Frameworks.Models.placePanel <|.. UserManagement.View.SignUpView
+UserManagement.View.JFrame <|-- UserManagement.View.SignUpView
+java.awt.event.ActionListener <|.. Score.Controller.ScoreViewController
+Score.Helper.ScoreManagement <|-- Score.Controller.ScoreViewController
+main.moon_lander.MobileController.MobileControlHelper <|-- main.moon_lander.PlayerRocket
+@enduml
